@@ -459,12 +459,12 @@ function initPhotoLightbox() {
   const letterPhotoSmall = document.querySelector('.letter-photo-small');
 
   const photoList = [
-    { src: 'images/aaru-1.jpeg', caption: 'My Sweet Queen 👑' },
-    { src: 'images/aaru-2.jpeg', caption: 'Cutest Smile Ever 🥰' },
-    { src: 'images/aaru-3.jpeg', caption: 'My Heartbeat 💗' },
-    { src: 'images/aaru-4.jpeg', caption: 'Pure Radiance ✨' },
-    { src: 'images/aaru-5.jpeg', caption: 'My Cutie Pie 🎀' },
-    { src: 'images/aaru-6.jpeg', caption: 'Forever Mine 💍' }
+    { src: 'images/aaru-1.jpeg', caption: 'My Sweet Queen 👑✨' },
+    { src: 'images/aaru-2.jpeg', caption: 'Cutest Smile Ever 🥰💕' },
+    { src: 'images/aaru-3.jpeg', caption: 'My Heartbeat 💗🥹' },
+    { src: 'images/aaru-4.jpeg', caption: 'Pure Radiance ✨🌹' },
+    { src: 'images/aaru-5.jpeg', caption: 'My Cutie Pie 🎀🧸' },
+    { src: 'images/aaru-6.jpeg', caption: 'Forever Mine 💍❤️' }
   ];
 
   let currentIndex = 0;

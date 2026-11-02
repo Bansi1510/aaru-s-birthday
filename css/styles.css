@@ -302,10 +302,10 @@ section {
 /* Photo Frame - Enhanced Portrait Arch */
 .hero-photo-frame {
   position: relative;
-  width: 250px;
+  width: 240px;
   height: 330px;
-  border-radius: 120px 120px 36px 36px;
-  padding: 8px;
+  border-radius: 90px 90px 28px 28px;
+  padding: 6px;
   background: linear-gradient(135deg, #f43f5e, #fbbf24, #be123c, #fda4af);
   box-shadow: 0 10px 40px rgba(244, 63, 94, 0.5), 0 0 70px rgba(225, 29, 72, 0.3);
   animation: borderRotate 12s linear infinite;
@@ -316,18 +316,22 @@ section {
 .hero-photo-inner {
   width: 100%;
   height: 100%;
-  border-radius: 112px 112px 28px 28px;
+  border-radius: 84px 84px 22px 22px;
   overflow: hidden;
   position: relative;
   border: 4px solid #fff;
-  background: #1a030b;
+  background: radial-gradient(circle at center, #380718 0%, #150208 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-photo-inner img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 15%;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
   transition: transform 0.6s ease;
   display: block;
 }
@@ -1009,20 +1013,28 @@ section {
 
 .polaroid-img-wrap {
   width: 100%;
-  aspect-ratio: 3 / 4;
+  height: 380px;
+  max-height: 52vh;
+  border-radius: 8px;
   overflow: hidden;
-  border-radius: 6px;
-  background: #2a0814;
   position: relative;
+  background: radial-gradient(circle at center, #3a0618 0%, #17020a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
 }
 
 .polaroid-img-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 15%;
-  transition: transform 0.6s ease;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
   display: block;
+  border-radius: 6px;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.55));
+  transition: transform 0.4s ease;
 }
 
 .polaroid-tap-hint {
@@ -1360,29 +1372,34 @@ section {
 }
 
 .letter-photo-small {
-  width: 140px;
-  height: 185px;
-  border-radius: 24px;
+  width: auto;
+  max-width: 200px;
+  height: 250px;
   margin: 0 auto 15px auto;
   border: 3px solid #e11d48;
+  border-radius: 22px;
   padding: 4px;
-  background: #fff;
-  box-shadow: 0 10px 25px rgba(225, 29, 72, 0.4);
+  background: radial-gradient(circle at center, #380718 0%, #150208 100%);
+  box-shadow: 0 12px 30px rgba(225, 29, 72, 0.45);
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .letter-photo-small:hover {
   transform: scale(1.05);
-  box-shadow: 0 15px 35px rgba(225, 29, 72, 0.6);
+  box-shadow: 0 16px 40px rgba(225, 29, 72, 0.65);
 }
 
 .letter-photo-small img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 15%;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
   border-radius: 18px;
   display: block;
 }
@@ -1886,14 +1903,20 @@ footer {
   }
 
   .letter-photo-small {
-    width: 120px;
-    height: 160px;
+    width: auto;
+    max-width: 175px;
+    height: 225px;
     border-radius: 20px;
     margin-bottom: 14px;
   }
 
   .letter-photo-small img {
     border-radius: 16px;
+  }
+
+  .polaroid-img-wrap {
+    height: 340px;
+    max-height: 50vh;
   }
 
   .reasons-grid {
@@ -1982,8 +2005,19 @@ footer {
   }
 
   .hero-photo-frame {
-    width: 165px;
-    height: 165px;
+    width: 175px;
+    height: 240px;
+    border-radius: 65px 65px 18px 18px;
+  }
+
+  .polaroid-img-wrap {
+    height: 290px;
+  }
+
+  .letter-photo-small {
+    width: auto;
+    max-width: 145px;
+    height: 195px;
   }
 
   .deco-teddy {
