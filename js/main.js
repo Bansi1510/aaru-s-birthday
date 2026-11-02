@@ -144,14 +144,92 @@ function initPetalCanvas() {
 }
 
 /* ==========================================================================
-   2. WEB AUDIO ROMANTIC MUSIC & CHIMES (NO EXTERNAL AUDIO FILES NEEDED!)
+   2. VAAROON (MIRZAPUR) ROMANTIC MELODY & WEB AUDIO SYNTHESIZER
    ========================================================================== */
 let audioCtx = null;
 let isMusicPlaying = false;
-let musicInterval = null;
+let musicTimeout = null;
+
+// The iconic love ballad "Vaaroon" from Mirzapur (Anand Bhaskar / Romy)
+const vaaroonScore = [
+  // Acoustic Guitar Intro (D - Bm - G - A)
+  { note: 293.66, chord: 146.83, dur: 0.55, type: 'triangle' }, // D4, D3
+  { note: 369.99, chord: 220.00, dur: 0.45, type: 'triangle' }, // F#4, A3
+  { note: 440.00, chord: null,   dur: 0.50, type: 'triangle' }, // A4
+  { note: 369.99, chord: null,   dur: 0.45, type: 'triangle' }, // F#4
+
+  { note: 246.94, chord: 123.47, dur: 0.55, type: 'triangle' }, // B3, B2
+  { note: 293.66, chord: 185.00, dur: 0.45, type: 'triangle' }, // D4, F#3
+  { note: 369.99, chord: null,   dur: 0.50, type: 'triangle' }, // F#4
+  { note: 293.66, chord: null,   dur: 0.45, type: 'triangle' }, // D4
+
+  { note: 196.00, chord: 98.00,  dur: 0.55, type: 'triangle' }, // G3, G2
+  { note: 246.94, chord: 146.83, dur: 0.45, type: 'triangle' }, // B3, D3
+  { note: 293.66, chord: null,   dur: 0.50, type: 'triangle' }, // D4
+  { note: 246.94, chord: null,   dur: 0.45, type: 'triangle' }, // B3
+
+  { note: 220.00, chord: 110.00, dur: 0.55, type: 'triangle' }, // A3, A2
+  { note: 277.18, chord: 164.81, dur: 0.45, type: 'triangle' }, // C#4, E3
+  { note: 329.63, chord: null,   dur: 0.50, type: 'triangle' }, // E4
+  { note: 277.18, chord: null,   dur: 0.45, type: 'triangle' }, // C#4
+
+  // Vocal Theme: "Vaa-rooon..."
+  { note: 369.99, chord: 146.83, dur: 0.95, type: 'sine' },     // F#4 ("Vaa-")
+  { note: 440.00, chord: 220.00, dur: 0.50, type: 'sine' },     // A4
+  { note: 493.88, chord: null,   dur: 0.85, type: 'sine' },     // B4 ("-rooon...")
+  { note: 440.00, chord: null,   dur: 0.45, type: 'sine' },     // A4
+  { note: 369.99, chord: 146.83, dur: 0.80, type: 'sine' },     // F#4
+
+  // "Vaa-rooon..."
+  { note: 369.99, chord: 123.47, dur: 0.85, type: 'sine' },     // F#4 ("Vaa-")
+  { note: 440.00, chord: null,   dur: 0.45, type: 'sine' },     // A4
+  { note: 493.88, chord: 185.00, dur: 0.65, type: 'sine' },     // B4 ("-rooon...")
+  { note: 587.33, chord: null,   dur: 0.65, type: 'sine' },     // D5
+  { note: 554.37, chord: null,   dur: 0.55, type: 'sine' },     // C#5
+  { note: 493.88, chord: null,   dur: 0.50, type: 'sine' },     // B4
+  { note: 440.00, chord: 220.00, dur: 0.85, type: 'sine' },     // A4
+
+  // "Main vaaroon tori..."
+  { note: 369.99, chord: 98.00,  dur: 0.45, type: 'sine' },     // F#4 ("Main")
+  { note: 392.00, chord: null,   dur: 0.55, type: 'sine' },     // G4 ("vaa-")
+  { note: 440.00, chord: 146.83, dur: 0.55, type: 'sine' },     // A4 ("-roon")
+  { note: 369.99, chord: null,   dur: 0.55, type: 'sine' },     // F#4 ("to-")
+  { note: 329.63, chord: 110.00, dur: 0.55, type: 'sine' },     // E4 ("-ri")
+  { note: 293.66, chord: 146.83, dur: 1.00, type: 'sine' },     // D4
+
+  // "Ab na jag ki hai parvaah koi..."
+  { note: 293.66, chord: 146.83, dur: 0.40, type: 'sine' },     // D4 ("Ab")
+  { note: 329.63, chord: null,   dur: 0.40, type: 'sine' },     // E4 ("na")
+  { note: 369.99, chord: 220.00, dur: 0.50, type: 'sine' },     // F#4 ("jag")
+  { note: 369.99, chord: null,   dur: 0.40, type: 'sine' },     // F#4 ("ki")
+  { note: 369.99, chord: null,   dur: 0.45, type: 'sine' },     // F#4 ("hai")
+  { note: 392.00, chord: 98.00,  dur: 0.45, type: 'sine' },     // G4 ("par-")
+  { note: 369.99, chord: null,   dur: 0.45, type: 'sine' },     // F#4 ("-vaah")
+  { note: 329.63, chord: 110.00, dur: 0.50, type: 'sine' },     // E4 ("ko-")
+  { note: 293.66, chord: null,   dur: 0.85, type: 'sine' },     // D4 ("-i")
+
+  // "Thaam le tu mori zindagi..."
+  { note: 293.66, chord: 146.83, dur: 0.40, type: 'sine' },     // D4
+  { note: 329.63, chord: null,   dur: 0.40, type: 'sine' },     // E4
+  { note: 369.99, chord: 220.00, dur: 0.55, type: 'sine' },     // F#4
+  { note: 440.00, chord: null,   dur: 0.55, type: 'sine' },     // A4
+  { note: 392.00, chord: 98.00,  dur: 0.50, type: 'sine' },     // G4
+  { note: 369.99, chord: null,   dur: 0.50, type: 'sine' },     // F#4
+  { note: 329.63, chord: 110.00, dur: 0.50, type: 'sine' },     // E4
+  { note: 293.66, chord: 146.83, dur: 1.05, type: 'sine' },     // D4
+
+  // "Tohse badh ke na koi khushi..."
+  { note: 293.66, chord: 146.83, dur: 0.40, type: 'sine' },     // D4
+  { note: 369.99, chord: null,   dur: 0.55, type: 'sine' },     // F#4
+  { note: 329.63, chord: 110.00, dur: 0.50, type: 'sine' },     // E4
+  { note: 293.66, chord: null,   dur: 0.50, type: 'sine' },     // D4
+  { note: 277.18, chord: null,   dur: 0.50, type: 'sine' },     // C#4
+  { note: 293.66, chord: 146.83, dur: 1.30, type: 'sine' }      // D4
+];
 
 function initWebAudio() {
   const musicToggle = document.getElementById('music-toggle');
+  const bgAudio = document.getElementById('bg-audio');
   if (!musicToggle) return;
 
   function toggleMusic() {
@@ -163,19 +241,36 @@ function initWebAudio() {
     }
 
     if (isMusicPlaying) {
-      stopRomanticMelody();
+      stopVaaroonMelody();
+      if (bgAudio && !bgAudio.paused) {
+        bgAudio.pause();
+      }
       musicToggle.classList.add('music-paused');
-      musicToggle.setAttribute('aria-label', 'Play Romantic Music');
+      musicToggle.setAttribute('aria-label', 'Play Song: Vaaroon (Mirzapur)');
     } else {
-      startRomanticMelody();
+      let audioFilePlaying = false;
+      if (bgAudio) {
+        bgAudio.play().then(() => {
+          audioFilePlaying = true;
+          isMusicPlaying = true;
+          musicToggle.classList.remove('music-paused');
+        }).catch(() => {
+          // Fallback to Web Audio synthesis of Vaaroon
+          startVaaroonMelody();
+        });
+      }
+      if (!audioFilePlaying) {
+        startVaaroonMelody();
+      }
       musicToggle.classList.remove('music-paused');
-      musicToggle.setAttribute('aria-label', 'Pause Romantic Music');
+      musicToggle.setAttribute('aria-label', 'Pause Song: Vaaroon (Mirzapur)');
+      showToast('Now Playing: Vaaroon (Mirzapur) 💕🎵');
     }
   }
 
   musicToggle.addEventListener('click', toggleMusic);
 
-  // Auto-start music on first interaction if possible
+  // Auto-start music on first interaction
   const startOnce = () => {
     if (!isMusicPlaying) {
       toggleMusic();
@@ -186,15 +281,15 @@ function initWebAudio() {
 }
 
 function playNote(freq, startTime, duration, type = 'sine', gainVal = 0.12) {
-  if (!audioCtx) return;
+  if (!audioCtx || !freq) return;
   const osc = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
 
   osc.type = type;
   osc.frequency.setValueAtTime(freq, startTime);
 
-  gain.gain.setValueAtTime(0.001, startTime);
-  gain.gain.exponentialRampToValueAtTime(gainVal, startTime + 0.05);
+  gain.gain.setValueAtTime(0.0001, startTime);
+  gain.gain.exponentialRampToValueAtTime(gainVal, startTime + 0.04);
   gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
 
   osc.connect(gain);
@@ -204,41 +299,39 @@ function playNote(freq, startTime, duration, type = 'sine', gainVal = 0.12) {
   osc.stop(startTime + duration);
 }
 
-function startRomanticMelody() {
+function startVaaroonMelody() {
   if (isMusicPlaying) return;
   isMusicPlaying = true;
-
-  // Gentle, romantic arpeggio notes in F Major / D Minor (Hz)
-  const notes = [
-    349.23, 440.0, 523.25, 698.46, 523.25, 440.0, // F4, A4, C5, F5, C5, A4
-    293.66, 349.23, 440.0, 587.33, 440.0, 349.23, // D4, F4, A4, D5, A4, F4
-    261.63, 329.63, 392.0, 523.25, 392.0, 329.63, // C4, E4, G4, C5, G4, E4
-    233.08, 293.66, 349.23, 466.16, 349.23, 293.66  // Bb3, D4, F4, Bb4, F4, D4
-  ];
 
   let step = 0;
   function scheduleNext() {
     if (!isMusicPlaying || !audioCtx) return;
+
+    const item = vaaroonScore[step % vaaroonScore.length];
     const now = audioCtx.currentTime;
-    const freq = notes[step % notes.length];
-    
-    // Main chime note
-    playNote(freq, now, 0.9, 'triangle', 0.07);
-    // Soft high harmonic
-    playNote(freq * 2, now + 0.02, 0.6, 'sine', 0.03);
+
+    // Melody lead note
+    playNote(item.note, now, item.dur * 1.15, item.type, 0.08);
+    // Subtle sweet octave harmonic
+    playNote(item.note * 2, now + 0.02, item.dur * 0.7, 'sine', 0.025);
+
+    // Warm bass chord note if defined
+    if (item.chord) {
+      playNote(item.chord, now, item.dur * 1.5, 'triangle', 0.06);
+    }
 
     step++;
+    musicTimeout = setTimeout(scheduleNext, item.dur * 1000);
   }
 
   scheduleNext();
-  musicInterval = setInterval(scheduleNext, 520);
 }
 
-function stopRomanticMelody() {
+function stopVaaroonMelody() {
   isMusicPlaying = false;
-  if (musicInterval) {
-    clearInterval(musicInterval);
-    musicInterval = null;
+  if (musicTimeout) {
+    clearTimeout(musicTimeout);
+    musicTimeout = null;
   }
 }
 
