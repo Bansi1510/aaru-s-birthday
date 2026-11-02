@@ -5,7 +5,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initPetalCanvas();
-  initWebAudio();
   initChocolateBox();
   initTeddyHug();
   initFlowerShower();
@@ -143,282 +142,27 @@ function initPetalCanvas() {
   };
 }
 
-/* ==========================================================================
-   2. VAAROON (MIRZAPUR) ROMANTIC SONG (OFFICIAL YOUTUBE & WEB AUDIO ENGINE)
-   ========================================================================== */
-let audioCtx = null;
-let isMusicPlaying = false;
-let musicTimeout = null;
-let ytPlayer = null;
-let isYTReady = false;
-let wantMusicToPlay = false;
-
-// YouTube Iframe API Global Callback
-window.onYouTubeIframeAPIReady = function() {
-  ytPlayer = new YT.Player('yt-audio-player', {
-    height: '1',
-    width: '1',
-    videoId: 's_WCm5PMzmk', // Official Vaaroon | Mirzapur | Anand Bhaskar | Romy
-    playerVars: {
-      'autoplay': 0,
-      'controls': 0,
-      'loop': 1,
-      'playlist': 's_WCm5PMzmk',
-      'playsinline': 1,
-      'enablejsapi': 1
-    },
-    events: {
-      'onReady': () => {
-        isYTReady = true;
-        if (wantMusicToPlay) {
-          try {
-            ytPlayer.playVideo();
-          } catch(e) {}
-        }
-      },
-      'onStateChange': (event) => {
-        if (event.data === YT.PlayerState.PLAYING) {
-          isMusicPlaying = true;
-          stopVaaroonSynthMelody();
-          updateMusicUI(true);
-        } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
-          isMusicPlaying = false;
-          updateMusicUI(false);
-        }
-      }
-    }
-  });
-};
-
-function updateMusicUI(playing) {
-  const musicToggle = document.getElementById('music-toggle');
-  if (!musicToggle) return;
-  if (playing) {
-    musicToggle.classList.remove('music-paused');
-    musicToggle.setAttribute('aria-label', 'Pause Song: Vaaroon (Mirzapur)');
-  } else {
-    musicToggle.classList.add('music-paused');
-    musicToggle.setAttribute('aria-label', 'Play Song: Vaaroon (Mirzapur)');
-  }
-}
-
-// The iconic love ballad "Vaaroon" from Mirzapur score for fallback synth
-const vaaroonScore = [
-  // Acoustic Guitar Intro (D - Bm - G - A)
-  { note: 293.66, chord: 146.83, dur: 0.55, type: 'triangle' }, // D4, D3
-  { note: 369.99, chord: 220.00, dur: 0.45, type: 'triangle' }, // F#4, A3
-  { note: 440.00, chord: null,   dur: 0.50, type: 'triangle' }, // A4
-  { note: 369.99, chord: null,   dur: 0.45, type: 'triangle' }, // F#4
-
-  { note: 246.94, chord: 123.47, dur: 0.55, type: 'triangle' }, // B3, B2
-  { note: 293.66, chord: 185.00, dur: 0.45, type: 'triangle' }, // D4, F#3
-  { note: 369.99, chord: null,   dur: 0.50, type: 'triangle' }, // F#4
-  { note: 293.66, chord: null,   dur: 0.45, type: 'triangle' }, // D4
-
-  { note: 196.00, chord: 98.00,  dur: 0.55, type: 'triangle' }, // G3, G2
-  { note: 246.94, chord: 146.83, dur: 0.45, type: 'triangle' }, // B3, D3
-  { note: 293.66, chord: null,   dur: 0.50, type: 'triangle' }, // D4
-  { note: 246.94, chord: null,   dur: 0.45, type: 'triangle' }, // B3
-
-  { note: 220.00, chord: 110.00, dur: 0.55, type: 'triangle' }, // A3, A2
-  { note: 277.18, chord: 164.81, dur: 0.45, type: 'triangle' }, // C#4, E3
-  { note: 329.63, chord: null,   dur: 0.50, type: 'triangle' }, // E4
-  { note: 277.18, chord: null,   dur: 0.45, type: 'triangle' }, // C#4
-
-  // Vocal Theme: "Vaa-rooon..."
-  { note: 369.99, chord: 146.83, dur: 0.95, type: 'sine' },     // F#4 ("Vaa-")
-  { note: 440.00, chord: 220.00, dur: 0.50, type: 'sine' },     // A4
-  { note: 493.88, chord: null,   dur: 0.85, type: 'sine' },     // B4 ("-rooon...")
-  { note: 440.00, chord: null,   dur: 0.45, type: 'sine' },     // A4
-  { note: 369.99, chord: 146.83, dur: 0.80, type: 'sine' },     // F#4
-
-  // "Vaa-rooon..."
-  { note: 369.99, chord: 123.47, dur: 0.85, type: 'sine' },     // F#4 ("Vaa-")
-  { note: 440.00, chord: null,   dur: 0.45, type: 'sine' },     // A4
-  { note: 493.88, chord: 185.00, dur: 0.65, type: 'sine' },     // B4 ("-rooon...")
-  { note: 587.33, chord: null,   dur: 0.65, type: 'sine' },     // D5
-  { note: 554.37, chord: null,   dur: 0.55, type: 'sine' },     // C#5
-  { note: 493.88, chord: null,   dur: 0.50, type: 'sine' },     // B4
-  { note: 440.00, chord: 220.00, dur: 0.85, type: 'sine' },     // A4
-
-  // "Main vaaroon tori..."
-  { note: 369.99, chord: 98.00,  dur: 0.45, type: 'sine' },     // F#4 ("Main")
-  { note: 392.00, chord: null,   dur: 0.55, type: 'sine' },     // G4 ("vaa-")
-  { note: 440.00, chord: 146.83, dur: 0.55, type: 'sine' },     // A4 ("-roon")
-  { note: 369.99, chord: null,   dur: 0.55, type: 'sine' },     // F#4 ("to-")
-  { note: 329.63, chord: 110.00, dur: 0.55, type: 'sine' },     // E4 ("-ri")
-  { note: 293.66, chord: 146.83, dur: 1.00, type: 'sine' },     // D4
-
-  // "Ab na jag ki hai parvaah koi..."
-  { note: 293.66, chord: 146.83, dur: 0.40, type: 'sine' },     // D4 ("Ab")
-  { note: 329.63, chord: null,   dur: 0.40, type: 'sine' },     // E4 ("na")
-  { note: 369.99, chord: 220.00, dur: 0.50, type: 'sine' },     // F#4 ("jag")
-  { note: 369.99, chord: null,   dur: 0.40, type: 'sine' },     // F#4 ("ki")
-  { note: 369.99, chord: null,   dur: 0.45, type: 'sine' },     // F#4 ("hai")
-  { note: 392.00, chord: 98.00,  dur: 0.45, type: 'sine' },     // G4 ("par-")
-  { note: 369.99, chord: null,   dur: 0.45, type: 'sine' },     // F#4 ("-vaah")
-  { note: 329.63, chord: 110.00, dur: 0.50, type: 'sine' },     // E4 ("ko-")
-  { note: 293.66, chord: null,   dur: 0.85, type: 'sine' },     // D4 ("-i")
-
-  // "Thaam le tu mori zindagi..."
-  { note: 293.66, chord: 146.83, dur: 0.40, type: 'sine' },     // D4
-  { note: 329.63, chord: null,   dur: 0.40, type: 'sine' },     // E4
-  { note: 369.99, chord: 220.00, dur: 0.55, type: 'sine' },     // F#4
-  { note: 440.00, chord: null,   dur: 0.55, type: 'sine' },     // A4
-  { note: 392.00, chord: 98.00,  dur: 0.50, type: 'sine' },     // G4
-  { note: 369.99, chord: null,   dur: 0.50, type: 'sine' },     // F#4
-  { note: 329.63, chord: 110.00, dur: 0.50, type: 'sine' },     // E4
-  { note: 293.66, chord: 146.83, dur: 1.05, type: 'sine' },     // D4
-
-  // "Tohse badh ke na koi khushi..."
-  { note: 293.66, chord: 146.83, dur: 0.40, type: 'sine' },     // D4
-  { note: 369.99, chord: null,   dur: 0.55, type: 'sine' },     // F#4
-  { note: 329.63, chord: 110.00, dur: 0.50, type: 'sine' },     // E4
-  { note: 293.66, chord: null,   dur: 0.50, type: 'sine' },     // D4
-  { note: 277.18, chord: null,   dur: 0.50, type: 'sine' },     // C#4
-  { note: 293.66, chord: 146.83, dur: 1.30, type: 'sine' }      // D4
-];
-
-function initWebAudio() {
-  const musicToggle = document.getElementById('music-toggle');
-  const bgAudio = document.getElementById('bg-audio');
-  if (!musicToggle) return;
-
-  function toggleMusic() {
-    if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
-
-    if (isMusicPlaying) {
-      wantMusicToPlay = false;
-      if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
-        try { ytPlayer.pauseVideo(); } catch(e) {}
-      }
-      if (bgAudio && !bgAudio.paused) {
-        bgAudio.pause();
-      }
-      stopVaaroonSynthMelody();
-      isMusicPlaying = false;
-      updateMusicUI(false);
-      showToast('Melody Paused ⏸️');
-    } else {
-      wantMusicToPlay = true;
-      let ytAttempted = false;
-
-      // 1. Try Official YouTube Player for Vaaroon
-      if (ytPlayer && typeof ytPlayer.playVideo === 'function' && isYTReady) {
-        try {
-          ytPlayer.playVideo();
-          ytAttempted = true;
-          isMusicPlaying = true;
-          updateMusicUI(true);
-        } catch(e) {
-          console.warn('YT Play error', e);
-        }
-      }
-
-      // 2. Try background audio tag if local audio/vaaroon.mp3 exists
-      if (!ytAttempted && bgAudio && bgAudio.src) {
-        bgAudio.play().then(() => {
-          isMusicPlaying = true;
-          updateMusicUI(true);
-        }).catch(() => {
-          // 3. Fallback to Web Audio synthesis of Vaaroon
-          startVaaroonSynthMelody();
-          updateMusicUI(true);
-        });
-      } else if (!ytAttempted) {
-        // Fallback to Web Audio synthesis while waiting for YT
-        startVaaroonSynthMelody();
-        updateMusicUI(true);
-      }
-
-      showToast('Now Playing: Vaaroon (Mirzapur) 💕🎵');
-    }
-  }
-
-  musicToggle.addEventListener('click', toggleMusic);
-
-  // Auto-start music on first user touch/click anywhere on page
-  const startOnce = () => {
-    if (!isMusicPlaying) {
-      toggleMusic();
-    }
-    window.removeEventListener('click', startOnce);
-    window.removeEventListener('touchstart', startOnce);
-  };
-  window.addEventListener('click', startOnce, { once: true });
-  window.addEventListener('touchstart', startOnce, { once: true });
-}
-
-function playNote(freq, startTime, duration, type = 'sine', gainVal = 0.12) {
-  if (!audioCtx || !freq) return;
-  const osc = audioCtx.createOscillator();
-  const gain = audioCtx.createGain();
-
-  osc.type = type;
-  osc.frequency.setValueAtTime(freq, startTime);
-
-  gain.gain.setValueAtTime(0.0001, startTime);
-  gain.gain.exponentialRampToValueAtTime(gainVal, startTime + 0.04);
-  gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
-
-  osc.connect(gain);
-  gain.connect(audioCtx.destination);
-
-  osc.start(startTime);
-  osc.stop(startTime + duration);
-}
-
-function startVaaroonSynthMelody() {
-  if (isMusicPlaying && !wantMusicToPlay) return;
-  isMusicPlaying = true;
-
-  let step = 0;
-  function scheduleNext() {
-    if (!isMusicPlaying || !audioCtx) return;
-
-    const item = vaaroonScore[step % vaaroonScore.length];
-    const now = audioCtx.currentTime;
-
-    // Melody lead note
-    playNote(item.note, now, item.dur * 1.15, item.type, 0.08);
-    // Subtle sweet octave harmonic
-    playNote(item.note * 2, now + 0.02, item.dur * 0.7, 'sine', 0.025);
-
-    // Warm bass chord note if defined
-    if (item.chord) {
-      playNote(item.chord, now, item.dur * 1.5, 'triangle', 0.06);
-    }
-
-    step++;
-    musicTimeout = setTimeout(scheduleNext, item.dur * 1000);
-  }
-
-  scheduleNext();
-}
-
-function stopVaaroonSynthMelody() {
-  if (musicTimeout) {
-    clearTimeout(musicTimeout);
-    musicTimeout = null;
-  }
-}
-
 // Sound effect for magic sparkle
 function playSparkleSound() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContext) return;
+  const audioCtx = new AudioContext();
   if (audioCtx.state === 'suspended') audioCtx.resume();
 
   const notes = [523.25, 659.25, 783.99, 1046.5, 1318.51];
   const now = audioCtx.currentTime;
   notes.forEach((f, i) => {
-    playNote(f, now + i * 0.08, 0.5, 'sine', 0.08);
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(f, now + i * 0.08);
+    gain.gain.setValueAtTime(0.0001, now + i * 0.08);
+    gain.gain.exponentialRampToValueAtTime(0.08, now + i * 0.08 + 0.04);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.08 + 0.5);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(now + i * 0.08);
+    osc.stop(now + i * 0.08 + 0.5);
   });
 }
 
