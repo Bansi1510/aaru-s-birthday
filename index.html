@@ -13,6 +13,9 @@
   <!-- Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💝</text></svg>">
+  
+  <!-- YouTube IFrame API for Vaaroon (Mirzapur) Romantic Song -->
+  <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
 
@@ -33,6 +36,11 @@
     <audio id="bg-audio" preload="auto">
       <source src="audio/vaaroon.mp3" type="audio/mpeg">
     </audio>
+  </div>
+
+  <!-- Hidden YouTube Player for Authentic Vaaroon (Mirzapur) Song -->
+  <div id="yt-player-wrap" style="position:fixed;bottom:-9999px;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;">
+    <div id="yt-audio-player"></div>
   </div>
 
   <!-- ==========================================================================
@@ -624,7 +632,7 @@
 
     <div class="gallery-grid">
       <!-- Polaroid 1 -->
-      <div class="polaroid-card" style="--rot: -2.5deg;">
+      <div class="polaroid-card polaroid-1" style="--rot: -2.5deg;">
         <div class="polaroid-tape"></div>
         <div class="polaroid-img-wrap">
           <img src="images/aaru-1.jpeg" alt="Aaru - My Gorgeous Sunshine" loading="lazy">
@@ -634,7 +642,7 @@
       </div>
 
       <!-- Polaroid 2 -->
-      <div class="polaroid-card" style="--rot: 2.2deg;">
+      <div class="polaroid-card polaroid-2" style="--rot: 2.2deg;">
         <div class="polaroid-tape"></div>
         <div class="polaroid-img-wrap">
           <img src="images/aaru-2.jpeg" alt="Aaru - Cutest Smile" loading="lazy">
@@ -644,7 +652,7 @@
       </div>
 
       <!-- Polaroid 3 -->
-      <div class="polaroid-card" style="--rot: -1.8deg;">
+      <div class="polaroid-card polaroid-3" style="--rot: -1.8deg;">
         <div class="polaroid-tape"></div>
         <div class="polaroid-img-wrap">
           <img src="images/aaru-3.jpeg" alt="Aaru - My Heartbeat" loading="lazy">
@@ -654,7 +662,7 @@
       </div>
 
       <!-- Polaroid 4 -->
-      <div class="polaroid-card" style="--rot: 2deg;">
+      <div class="polaroid-card polaroid-4" style="--rot: 2deg;">
         <div class="polaroid-tape"></div>
         <div class="polaroid-img-wrap">
           <img src="images/aaru-4.jpeg" alt="Aaru - Radiance and Beauty" loading="lazy">
@@ -664,7 +672,7 @@
       </div>
 
       <!-- Polaroid 5 -->
-      <div class="polaroid-card" style="--rot: -2deg;">
+      <div class="polaroid-card polaroid-5" style="--rot: -2deg;">
         <div class="polaroid-tape"></div>
         <div class="polaroid-img-wrap">
           <img src="images/aaru-5.jpeg" alt="Aaru - My Cutie Pie" loading="lazy">
@@ -674,7 +682,7 @@
       </div>
 
       <!-- Polaroid 6 -->
-      <div class="polaroid-card" style="--rot: 1.5deg;">
+      <div class="polaroid-card polaroid-6" style="--rot: 1.5deg;">
         <div class="polaroid-tape"></div>
         <div class="polaroid-img-wrap">
           <img src="images/aaru-6.jpeg" alt="Aaru - Forever Mine" loading="lazy">
@@ -722,11 +730,12 @@
 
         <!-- Header inside the letter -->
         <div class="letter-header">
-          <!-- Aaru Photo in Framed Border -->
+          <!-- Aaru Photo in Regal Royal Framed Arch -->
           <div class="letter-photo-small" id="letter-photo-btn" title="Tap to view full photo!">
-            <img src="images/aaru-2.jpeg" alt="Aaru">
+            <img src="images/aaru-6.jpeg" alt="Aaru - My Beautiful Queen">
+            <div class="letter-photo-badge">👑 My Queen Aaru 🥰</div>
           </div>
-          <div style="display: inline-block; background: rgba(225, 29, 72, 0.12); border: 1px solid rgba(225, 29, 72, 0.35); color: #881337; font-weight: 600; font-size: 0.85rem; padding: 4px 16px; border-radius: 999px; margin-bottom: 10px;">My Beautiful Wife Aaru 💍❤️</div>
+          <div style="display: inline-block; background: rgba(225, 29, 72, 0.12); border: 1px solid rgba(225, 29, 72, 0.35); color: #881337; font-weight: 600; font-size: 0.85rem; padding: 5px 18px; border-radius: 999px; margin-bottom: 12px; letter-spacing: 0.3px;">My Beautiful Wife Aaru 💍❤️</div>
           <h3 class="letter-heading-title">Just For You, My Aaru ❤️</h3>
           <div class="letter-heading-sub">My Life, My Heart, My Forever Wife 💖✨</div>
         </div>

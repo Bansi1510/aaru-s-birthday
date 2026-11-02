@@ -1013,28 +1013,48 @@ section {
 
 .polaroid-img-wrap {
   width: 100%;
-  height: 380px;
-  max-height: 52vh;
+  aspect-ratio: 4 / 5;
   border-radius: 8px;
   overflow: hidden;
   position: relative;
-  background: radial-gradient(circle at center, #3a0618 0%, #17020a 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
+  background: #ffffff;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
 
 .polaroid-img-wrap img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
   border-radius: 6px;
-  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.55));
-  transition: transform 0.4s ease;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Custom Object Positions to perfectly frame Aaru's smile and face */
+.polaroid-1 .polaroid-img-wrap img {
+  object-position: center 20%;
+}
+
+.polaroid-2 .polaroid-img-wrap img {
+  /* Cutest Smile Ever (aaru-2): sitting laughing, face at ~18% from top */
+  object-position: center 18%;
+}
+
+.polaroid-3 .polaroid-img-wrap img {
+  /* My Heartbeat (aaru-3): sage green suit, face at ~12% from top */
+  object-position: center 12%;
+}
+
+.polaroid-4 .polaroid-img-wrap img {
+  object-position: center 18%;
+}
+
+.polaroid-5 .polaroid-img-wrap img {
+  object-position: center 12%;
+}
+
+.polaroid-6 .polaroid-img-wrap img {
+  object-position: center 15%;
 }
 
 .polaroid-tap-hint {
@@ -1372,36 +1392,55 @@ section {
 }
 
 .letter-photo-small {
-  width: auto;
-  max-width: 200px;
-  height: 250px;
-  margin: 0 auto 15px auto;
-  border: 3px solid #e11d48;
-  border-radius: 22px;
+  width: 180px;
+  height: 230px;
+  margin: 0 auto 16px auto;
+  border-radius: 90px 90px 24px 24px;
+  border: 3.5px solid #e11d48;
   padding: 4px;
-  background: radial-gradient(circle at center, #380718 0%, #150208 100%);
-  box-shadow: 0 12px 30px rgba(225, 29, 72, 0.45);
+  background: linear-gradient(135deg, #fff1f2, #ffe4e6);
+  box-shadow: 0 12px 30px rgba(225, 29, 72, 0.35), 0 0 25px rgba(244, 63, 94, 0.25);
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
 }
 
 .letter-photo-small:hover {
   transform: scale(1.05);
-  box-shadow: 0 16px 40px rgba(225, 29, 72, 0.65);
+  box-shadow: 0 18px 40px rgba(225, 29, 72, 0.55), 0 0 35px rgba(244, 63, 94, 0.4);
 }
 
 .letter-photo-small img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  border-radius: 18px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  border-radius: 86px 86px 20px 20px;
   display: block;
+  transition: transform 0.5s ease;
+}
+
+.letter-photo-small:hover img {
+  transform: scale(1.08);
+}
+
+.letter-photo-badge {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(136, 19, 55, 0.92);
+  color: #fef3c7;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  border: 1px solid #fbbf24;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
 }
 
 .letter-heading-title {
@@ -1862,19 +1901,20 @@ footer {
   /* Polaroid Gallery Mobile */
   .gallery-grid {
     grid-template-columns: 1fr;
-    max-width: 290px;
+    max-width: 330px;
+    width: 100%;
     margin: 0 auto;
-    gap: 22px;
+    gap: 24px;
   }
 
   .polaroid-card {
-    padding: 10px 10px 18px 10px;
-    border-radius: 6px;
+    padding: 12px 12px 18px 12px;
+    border-radius: 10px;
   }
 
   .polaroid-caption {
-    font-size: 1.25rem;
-    margin-top: 10px;
+    font-size: 1.3rem;
+    margin-top: 12px;
   }
 
   /* Love Letter Mobile */
@@ -1903,20 +1943,21 @@ footer {
   }
 
   .letter-photo-small {
-    width: auto;
-    max-width: 175px;
-    height: 225px;
-    border-radius: 20px;
+    width: 165px;
+    height: 210px;
+    border-radius: 82px 82px 20px 20px;
     margin-bottom: 14px;
   }
 
   .letter-photo-small img {
-    border-radius: 16px;
+    border-radius: 78px 78px 16px 16px;
   }
 
   .polaroid-img-wrap {
-    height: 340px;
-    max-height: 50vh;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    height: auto;
+    max-height: none;
   }
 
   .reasons-grid {
@@ -2011,13 +2052,19 @@ footer {
   }
 
   .polaroid-img-wrap {
-    height: 290px;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    height: auto;
   }
 
   .letter-photo-small {
-    width: auto;
-    max-width: 145px;
-    height: 195px;
+    width: 145px;
+    height: 185px;
+    border-radius: 72px 72px 18px 18px;
+  }
+
+  .letter-photo-small img {
+    border-radius: 68px 68px 14px 14px;
   }
 
   .deco-teddy {

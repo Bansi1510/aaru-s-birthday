@@ -144,13 +144,65 @@ function initPetalCanvas() {
 }
 
 /* ==========================================================================
-   2. VAAROON (MIRZAPUR) ROMANTIC MELODY & WEB AUDIO SYNTHESIZER
+   2. VAAROON (MIRZAPUR) ROMANTIC SONG (OFFICIAL YOUTUBE & WEB AUDIO ENGINE)
    ========================================================================== */
 let audioCtx = null;
 let isMusicPlaying = false;
 let musicTimeout = null;
+let ytPlayer = null;
+let isYTReady = false;
+let wantMusicToPlay = false;
 
-// The iconic love ballad "Vaaroon" from Mirzapur (Anand Bhaskar / Romy)
+// YouTube Iframe API Global Callback
+window.onYouTubeIframeAPIReady = function() {
+  ytPlayer = new YT.Player('yt-audio-player', {
+    height: '1',
+    width: '1',
+    videoId: 's_WCm5PMzmk', // Official Vaaroon | Mirzapur | Anand Bhaskar | Romy
+    playerVars: {
+      'autoplay': 0,
+      'controls': 0,
+      'loop': 1,
+      'playlist': 's_WCm5PMzmk',
+      'playsinline': 1,
+      'enablejsapi': 1
+    },
+    events: {
+      'onReady': () => {
+        isYTReady = true;
+        if (wantMusicToPlay) {
+          try {
+            ytPlayer.playVideo();
+          } catch(e) {}
+        }
+      },
+      'onStateChange': (event) => {
+        if (event.data === YT.PlayerState.PLAYING) {
+          isMusicPlaying = true;
+          stopVaaroonSynthMelody();
+          updateMusicUI(true);
+        } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+          isMusicPlaying = false;
+          updateMusicUI(false);
+        }
+      }
+    }
+  });
+};
+
+function updateMusicUI(playing) {
+  const musicToggle = document.getElementById('music-toggle');
+  if (!musicToggle) return;
+  if (playing) {
+    musicToggle.classList.remove('music-paused');
+    musicToggle.setAttribute('aria-label', 'Pause Song: Vaaroon (Mirzapur)');
+  } else {
+    musicToggle.classList.add('music-paused');
+    musicToggle.setAttribute('aria-label', 'Play Song: Vaaroon (Mirzapur)');
+  }
+}
+
+// The iconic love ballad "Vaaroon" from Mirzapur score for fallback synth
 const vaaroonScore = [
   // Acoustic Guitar Intro (D - Bm - G - A)
   { note: 293.66, chord: 146.83, dur: 0.55, type: 'triangle' }, // D4, D3
@@ -241,43 +293,65 @@ function initWebAudio() {
     }
 
     if (isMusicPlaying) {
-      stopVaaroonMelody();
+      wantMusicToPlay = false;
+      if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+        try { ytPlayer.pauseVideo(); } catch(e) {}
+      }
       if (bgAudio && !bgAudio.paused) {
         bgAudio.pause();
       }
-      musicToggle.classList.add('music-paused');
-      musicToggle.setAttribute('aria-label', 'Play Song: Vaaroon (Mirzapur)');
+      stopVaaroonSynthMelody();
+      isMusicPlaying = false;
+      updateMusicUI(false);
+      showToast('Melody Paused ⏸️');
     } else {
-      let audioFilePlaying = false;
-      if (bgAudio) {
-        bgAudio.play().then(() => {
-          audioFilePlaying = true;
+      wantMusicToPlay = true;
+      let ytAttempted = false;
+
+      // 1. Try Official YouTube Player for Vaaroon
+      if (ytPlayer && typeof ytPlayer.playVideo === 'function' && isYTReady) {
+        try {
+          ytPlayer.playVideo();
+          ytAttempted = true;
           isMusicPlaying = true;
-          musicToggle.classList.remove('music-paused');
+          updateMusicUI(true);
+        } catch(e) {
+          console.warn('YT Play error', e);
+        }
+      }
+
+      // 2. Try background audio tag if local audio/vaaroon.mp3 exists
+      if (!ytAttempted && bgAudio && bgAudio.src) {
+        bgAudio.play().then(() => {
+          isMusicPlaying = true;
+          updateMusicUI(true);
         }).catch(() => {
-          // Fallback to Web Audio synthesis of Vaaroon
-          startVaaroonMelody();
+          // 3. Fallback to Web Audio synthesis of Vaaroon
+          startVaaroonSynthMelody();
+          updateMusicUI(true);
         });
+      } else if (!ytAttempted) {
+        // Fallback to Web Audio synthesis while waiting for YT
+        startVaaroonSynthMelody();
+        updateMusicUI(true);
       }
-      if (!audioFilePlaying) {
-        startVaaroonMelody();
-      }
-      musicToggle.classList.remove('music-paused');
-      musicToggle.setAttribute('aria-label', 'Pause Song: Vaaroon (Mirzapur)');
+
       showToast('Now Playing: Vaaroon (Mirzapur) 💕🎵');
     }
   }
 
   musicToggle.addEventListener('click', toggleMusic);
 
-  // Auto-start music on first interaction
+  // Auto-start music on first user touch/click anywhere on page
   const startOnce = () => {
     if (!isMusicPlaying) {
       toggleMusic();
     }
     window.removeEventListener('click', startOnce);
+    window.removeEventListener('touchstart', startOnce);
   };
   window.addEventListener('click', startOnce, { once: true });
+  window.addEventListener('touchstart', startOnce, { once: true });
 }
 
 function playNote(freq, startTime, duration, type = 'sine', gainVal = 0.12) {
@@ -299,8 +373,8 @@ function playNote(freq, startTime, duration, type = 'sine', gainVal = 0.12) {
   osc.stop(startTime + duration);
 }
 
-function startVaaroonMelody() {
-  if (isMusicPlaying) return;
+function startVaaroonSynthMelody() {
+  if (isMusicPlaying && !wantMusicToPlay) return;
   isMusicPlaying = true;
 
   let step = 0;
@@ -327,8 +401,7 @@ function startVaaroonMelody() {
   scheduleNext();
 }
 
-function stopVaaroonMelody() {
-  isMusicPlaying = false;
+function stopVaaroonSynthMelody() {
   if (musicTimeout) {
     clearTimeout(musicTimeout);
     musicTimeout = null;
@@ -600,7 +673,7 @@ function initPhotoLightbox() {
 
   // Open from letter
   if (letterPhotoSmall) {
-    letterPhotoSmall.addEventListener('click', () => openLightbox(1));
+    letterPhotoSmall.addEventListener('click', () => openLightbox(5));
   }
 
   // Open from polaroids
