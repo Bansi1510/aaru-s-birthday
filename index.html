@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <title>Happy Birthday, My Aaru! ❤️🧸🍫🌹</title>
+  
+  <!-- Romantic Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💝</text></svg>">
+</head>
+<body>
+
+  <!-- Rose Petals & Floating Hearts Canvas Particle Layer -->
+  <canvas id="petal-canvas"></canvas>
+
+  <!-- Floating Audio & Atmosphere Controls -->
+  <div class="floating-controls">
+    <button id="music-toggle" class="control-btn" aria-label="Toggle Romantic Music">
+      <span class="music-icon">🎵</span>
+      <span class="music-text">Romantic Melody</span>
+      <span class="music-waves">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </button>
+  </div>
+
+  <!-- ==========================================================================
+       1. HERO SECTION
+       ========================================================================== -->
+  <header class="hero-section" id="hero">
+    <div class="hero-glow-sphere"></div>
+    
+    <div class="hero-visual-wrapper">
+      <!-- Main Aaru Photograph in Glowing Frame -->
+      <div class="hero-photo-frame">
+        <div class="hero-photo-inner">
+          <img src="images/aaru-1.jpeg" alt="Aaru - My Beautiful Birthday Girl" loading="eager">
+        </div>
+      </div>
+
+      <!-- Floating Cute Teddy Bear SVG -->
+      <div class="hero-deco deco-teddy">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Ears -->
+          <circle cx="28" cy="28" r="14" fill="#a0522d"/>
+          <circle cx="28" cy="28" r="8" fill="#fda4af"/>
+          <circle cx="72" cy="28" r="14" fill="#a0522d"/>
+          <circle cx="72" cy="28" r="8" fill="#fda4af"/>
+          <!-- Head -->
+          <circle cx="50" cy="45" r="28" fill="#b45309"/>
+          <!-- Snout -->
+          <ellipse cx="50" cy="52" rx="12" ry="9" fill="#fef3c7"/>
+          <ellipse cx="50" cy="48" rx="5" ry="3.5" fill="#451a03"/>
+          <path d="M47 52 Q50 56 53 52" stroke="#451a03" stroke-width="2" stroke-linecap="round"/>
+          <!-- Blushing Cheeks -->
+          <ellipse cx="32" cy="52" rx="5" ry="3" fill="#f43f5e" opacity="0.6"/>
+          <ellipse cx="68" cy="52" rx="5" ry="3" fill="#f43f5e" opacity="0.6"/>
+          <!-- Eyes -->
+          <circle cx="39" cy="42" r="3.5" fill="#1f2937"/>
+          <circle cx="38" cy="41" r="1" fill="#fff"/>
+          <circle cx="61" cy="42" r="3.5" fill="#1f2937"/>
+          <circle cx="60" cy="41" r="1" fill="#fff"/>
+          <!-- Body -->
+          <ellipse cx="50" cy="78" rx="22" ry="18" fill="#b45309"/>
+          <!-- Heart in Paws -->
+          <path d="M50 72 C42 60 30 68 35 78 C40 86 50 92 50 92 C50 92 60 86 65 78 C70 68 58 60 50 72 Z" fill="#e11d48"/>
+          <!-- Paws hugging heart -->
+          <circle cx="37" cy="74" r="6" fill="#a0522d"/>
+          <circle cx="63" cy="74" r="6" fill="#a0522d"/>
+        </svg>
+      </div>
+
+      <!-- Floating Birthday Cake SVG with animated candles -->
+      <div class="hero-deco deco-cake">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Plate -->
+          <ellipse cx="50" cy="85" rx="36" ry="7" fill="#fbbf24" opacity="0.5"/>
+          <ellipse cx="50" cy="83" rx="34" ry="6" fill="#fff"/>
+          <!-- Tier 1 -->
+          <path d="M22 65 C22 65 30 63 50 63 C70 63 78 65 78 65 L78 80 C78 84 66 86 50 86 C34 86 22 84 22 80 Z" fill="#f43f5e"/>
+          <path d="M22 65 C26 69 34 69 38 65 C42 69 50 69 54 65 C58 69 66 69 70 65 C74 69 78 67 78 65" fill="#ffe4e6"/>
+          <!-- Tier 2 -->
+          <path d="M30 48 C30 48 38 46 50 46 C62 46 70 48 70 48 L70 64 C70 66 60 68 50 68 C40 68 30 66 30 64 Z" fill="#fda4af"/>
+          <path d="M30 48 C34 52 40 52 44 48 C48 52 54 52 58 48 C62 52 66 52 70 48" fill="#fff"/>
+          <!-- Candle -->
+          <rect x="48" y="32" width="4" height="15" rx="2" fill="#fbbf24"/>
+          <!-- Animated Flame -->
+          <path d="M50 22 C48 26 47 28 50 32 C53 28 52 26 50 22 Z" fill="#f59e0b">
+            <animate attributeName="d" values="M50 22 C48 26 47 28 50 32 C53 28 52 26 50 22 Z; M50 20 C47 25 46 27 50 32 C54 27 53 25 50 20 Z; M50 22 C48 26 47 28 50 32 C53 28 52 26 50 22 Z" dur="1s" repeatCount="indefinite"/>
+          </path>
+          <circle cx="50" cy="27" r="3" fill="#fef08a"/>
+        </svg>
+      </div>
+
+      <!-- Floating Rose Deco -->
+      <div class="hero-deco deco-rose-1">
+        <svg viewBox="0 0 100 100" fill="none">
+          <circle cx="50" cy="50" r="30" fill="#be123c"/>
+          <path d="M50 30 C40 35 35 48 44 58 C52 68 65 60 62 48 C60 40 55 35 50 30 Z" fill="#e11d48"/>
+          <path d="M46 44 C42 48 45 54 50 54 C54 54 57 50 54 45 C52 42 48 42 46 44 Z" fill="#fda4af"/>
+          <path d="M26 62 Q20 72 32 75 Q42 70 36 60 Z" fill="#15803d"/>
+        </svg>
+      </div>
+
+      <!-- Floating Chocolate Deco -->
+      <div class="hero-deco deco-choc-1">
+        <svg viewBox="0 0 100 100" fill="none">
+          <rect x="25" y="25" width="50" height="50" rx="14" fill="#5c200b"/>
+          <rect x="30" y="30" width="40" height="40" rx="10" fill="#78350f"/>
+          <path d="M35 45 Q50 35 65 50 Q50 65 35 55" stroke="#fef3c7" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="50" cy="50" r="4" fill="#fbbf24"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Hero Romantic Text -->
+    <div class="hero-badge">
+      <span>✨</span>
+      <span>A Very Special Day For My Queen</span>
+      <span>✨</span>
+    </div>
+
+    <h1 class="hero-title">
+      Happy Birthday, <span class="title-accent">My Aaru! ❤️</span>
+    </h1>
+
+    <p class="hero-subtitle">
+      Today is your special day, my cutie pie! 🧸💕
+    </p>
+
+    <!-- Animated Call To Action Button -->
+    <div class="hero-actions">
+      <a href="#chocolate-section" class="btn-romantic">
+        <span>Open Your Love Box 🎁</span>
+      </a>
+      <a href="#personal-message" class="btn-romantic btn-secondary">
+        <span>Read Love Letter 💌</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       2. CHOCOLATE SURPRISE SECTION 🍫
+       ========================================================================== */ -->
+  <section id="chocolate-section">
+    <div class="section-header">
+      <div class="section-tag">Sweet Indulgence 🍫</div>
+      <h2 class="section-title">Sweet Things For My Sweet Girl 🍫</h2>
+      <p class="section-subtitle">A delicate chocolate treasure box handcrafted with all my sweetness and devotion for you.</p>
+    </div>
+
+    <div class="chocolate-showcase">
+      <!-- Interactive Chocolate Gift Box -->
+      <div class="choc-box-container" id="choc-box-interactive" title="Click to Open the Box of Chocolates!">
+        <div class="choc-box-visual">
+          
+          <!-- Box Lid with Ribbon & Bow -->
+          <div class="choc-lid">
+            <div class="choc-lid-ribbon-v"></div>
+            <div class="choc-lid-ribbon-h"></div>
+            <!-- Ribbon Bow SVG -->
+            <svg class="choc-lid-bow" viewBox="0 0 100 100" fill="none">
+              <!-- Left Loop -->
+              <path d="M50 50 C25 20 15 45 42 54 Z" fill="#fbbf24" stroke="#d97706" stroke-width="2"/>
+              <!-- Right Loop -->
+              <path d="M50 50 C75 20 85 45 58 54 Z" fill="#fbbf24" stroke="#d97706" stroke-width="2"/>
+              <!-- Ribbon tails -->
+              <path d="M48 54 L32 82 L42 78 L50 60 Z" fill="#f59e0b"/>
+              <path d="M52 54 L68 82 L58 78 L50 60 Z" fill="#f59e0b"/>
+              <!-- Knot -->
+              <circle cx="50" cy="50" r="10" fill="#d97706" stroke="#fbbf24" stroke-width="2"/>
+              <circle cx="48" cy="48" r="3" fill="#fff" opacity="0.6"/>
+            </svg>
+            <div class="choc-lid-label">
+              <span>Tap to Open Aaru's Chocolates 🎁</span>
+            </div>
+          </div>
+
+          <!-- Chocolates Tray inside -->
+          <div class="choc-tray">
+            <!-- Choc 1: Heart Truffle -->
+            <div class="choc-slot" title="Heart Truffle">
+              <svg class="choc-item-svg" viewBox="0 0 100 100">
+                <path d="M50 32 C38 18 20 28 26 44 C32 58 50 72 50 72 C50 72 68 58 74 44 C80 28 62 18 50 32 Z" fill="#e11d48"/>
+                <path d="M38 34 Q50 42 62 36" stroke="#fef3c7" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="44" cy="30" r="3" fill="#fbbf24"/>
+              </svg>
+              <div class="choc-name">Ruby Truffle</div>
+            </div>
+
+            <!-- Choc 2: Golden Ganache -->
+            <div class="choc-slot" title="Golden Swirl">
+              <svg class="choc-item-svg" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="28" fill="#451a03"/>
+                <circle cx="50" cy="50" r="22" fill="#78350f"/>
+                <path d="M42 42 Q50 32 58 42 Q64 54 50 56 Q38 52 44 44" stroke="#fbbf24" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              </svg>
+              <div class="choc-name">Gold Ganache</div>
+            </div>
+
+            <!-- Choc 3: Rose Petal Kiss -->
+            <div class="choc-slot" title="Rosebud Delight">
+              <svg class="choc-item-svg" viewBox="0 0 100 100">
+                <ellipse cx="50" cy="52" rx="26" ry="24" fill="#fda4af"/>
+                <path d="M50 38 C44 42 42 50 48 56 C54 62 60 56 58 48 C56 42 52 40 50 38 Z" fill="#be123c"/>
+                <circle cx="50" cy="48" r="4" fill="#fff"/>
+              </svg>
+              <div class="choc-name">Rose Kiss</div>
+            </div>
+
+            <!-- Choc 4: Caramel Cup -->
+            <div class="choc-slot" title="Caramel Crunch">
+              <svg class="choc-item-svg" viewBox="0 0 100 100">
+                <rect x="26" y="32" width="48" height="42" rx="12" fill="#92400e"/>
+                <rect x="32" y="38" width="36" height="30" rx="8" fill="#b45309"/>
+                <line x1="32" y1="52" x2="68" y2="52" stroke="#fef3c7" stroke-width="2.5" stroke-dasharray="3 3"/>
+              </svg>
+              <div class="choc-name">Caramel Cup</div>
+            </div>
+
+            <!-- Choc 5: Berry Blush -->
+            <div class="choc-slot" title="Berry Swirl">
+              <svg class="choc-item-svg" viewBox="0 0 100 100">
+                <polygon points="50,22 76,46 64,78 36,78 24,46" fill="#be123c"/>
+                <polygon points="50,28 70,48 60,72 40,72 30,48" fill="#e11d48"/>
+                <circle cx="50" cy="50" r="5" fill="#fef08a"/>
+              </svg>
+              <div class="choc-name">Berry Blush</div>
+            </div>
+
+            <!-- Choc 6: Hazelnut Praline -->
+            <div class="choc-slot" title="Hazelnut Praline">
+              <svg class="choc-item-svg" viewBox="0 0 100 100">
+                <rect x="25" y="25" width="50" height="50" rx="14" fill="#381e11"/>
+                <path d="M30 35 L70 65 M30 65 L70 35" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="50" cy="50" r="7" fill="#fef3c7"/>
+              </svg>
+              <div class="choc-name">Hazelnut Praline</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Button to toggle / refill box -->
+      <button id="choc-toggle-btn" class="btn-romantic btn-secondary" style="margin-top: 15px;">
+        <span>Refill / Toggle Chocolates 🍫</span>
+      </button>
+
+      <!-- Required Revealed Message Box -->
+      <div class="choc-message-box">
+        <p class="choc-main-text">
+          "Sending you unlimited chocolates because one sweet thing deserves unlimited sweetness! 🍫❤️"
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Romantic Photo Lightbox Modal -->
+  <div class="lightbox-modal" id="photo-lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close photo preview">&times;</button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Aaru Photo Preview">
+    </div>
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+  <!-- ==========================================================================
+       3. TEDDY BEAR SURPRISE 🧸
+       ========================================================================== -->
+  <section id="teddy-section">
+    <div class="section-header">
+      <div class="section-tag">Endless Cuddles 🧸</div>
+      <h2 class="section-title">A Little Teddy For My Teddy 🧸</h2>
+      <p class="section-subtitle">No matter how far or close, my warmth and cuddles are forever reserved just for you.</p>
+    </div>
+
+    <div class="romantic-card teddy-container">
+      
+      <!-- Interactive Teddy Bear Visual -->
+      <div class="teddy-interactive-wrapper" id="teddy-interactive-wrapper" title="Tap to hug teddy!">
+        <svg class="teddy-hero-svg" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Ears -->
+          <circle cx="55" cy="55" r="28" fill="#8d4925"/>
+          <circle cx="55" cy="55" r="16" fill="#fbcfe8"/>
+          <circle cx="145" cy="55" r="28" fill="#8d4925"/>
+          <circle cx="145" cy="55" r="16" fill="#fbcfe8"/>
+
+          <!-- Body -->
+          <ellipse cx="100" cy="155" rx="55" ry="45" fill="#a2592d"/>
+          <!-- Belly patch -->
+          <ellipse cx="100" cy="158" rx="36" ry="28" fill="#ffedd5"/>
+
+          <!-- Head -->
+          <circle cx="100" cy="90" r="54" fill="#a2592d"/>
+          
+          <!-- Snout -->
+          <ellipse cx="100" cy="104" rx="24" ry="18" fill="#ffedd5"/>
+          <ellipse cx="100" cy="96" rx="9" ry="6" fill="#431407"/>
+          <path d="M94 104 Q100 112 106 104" stroke="#431407" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- Blushing Cheeks -->
+          <ellipse cx="66" cy="102" rx="9" ry="5.5" fill="#f43f5e" opacity="0.65"/>
+          <ellipse cx="134" cy="102" rx="9" ry="5.5" fill="#f43f5e" opacity="0.65"/>
+
+          <!-- Shiny Eyes with Reflections -->
+          <circle cx="78" cy="84" r="7" fill="#1e1e1e"/>
+          <circle cx="76" cy="82" r="2.5" fill="#fff"/>
+          <circle cx="122" cy="84" r="7" fill="#1e1e1e"/>
+          <circle cx="120" cy="82" r="2.5" fill="#fff"/>
+
+          <!-- Ribbon Bow Tie -->
+          <path d="M100 126 C85 116 80 134 96 132 Z" fill="#e11d48"/>
+          <path d="M100 126 C115 116 120 134 104 132 Z" fill="#e11d48"/>
+          <circle cx="100" cy="126" r="4.5" fill="#fbbf24"/>
+
+          <!-- Big Glowing Beating Heart -->
+          <g class="teddy-heart-pulse">
+            <path d="M100 142 C82 118 56 136 68 158 C78 174 100 190 100 190 C100 190 122 174 132 158 C144 136 118 118 100 142 Z" fill="url(#heartGradient)" filter="drop-shadow(0 4px 8px rgba(225, 29, 72, 0.5))"/>
+            <text x="100" y="162" font-family="'Outfit', sans-serif" font-weight="700" font-size="11" fill="#fff" text-anchor="middle">AARU</text>
+          </g>
+
+          <!-- Paws holding Heart -->
+          <circle cx="70" cy="154" r="13" fill="#8d4925"/>
+          <ellipse cx="70" cy="154" rx="7" ry="5" fill="#ffedd5"/>
+          <circle cx="130" cy="154" r="13" fill="#8d4925"/>
+          <ellipse cx="130" cy="154" rx="7" ry="5" fill="#ffedd5"/>
+
+          <!-- Feet -->
+          <ellipse cx="64" cy="192" rx="17" ry="12" fill="#8d4925"/>
+          <ellipse cx="64" cy="192" rx="10" ry="7" fill="#ffedd5"/>
+          <ellipse cx="136" cy="192" rx="17" ry="12" fill="#8d4925"/>
+          <ellipse cx="136" cy="192" rx="10" ry="7" fill="#ffedd5"/>
+
+          <defs>
+            <linearGradient id="heartGradient" x1="60" y1="120" x2="140" y2="190" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#f43f5e"/>
+              <stop offset="1" stop-color="#be123c"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <!-- Teddy Message Content -->
+      <div class="teddy-content">
+        <div class="teddy-speech-bubble">
+          <p class="teddy-quote">
+            "If I could send you the cutest teddy in the world, I would still choose one more hug for you. 🤗❤️"
+          </p>
+          <div class="teddy-actions-row">
+            <button id="send-hug-btn" class="btn-romantic">
+              <span>Send Me A Hug 🧸</span>
+            </button>
+            <div class="hug-counter-badge" id="hug-counter-badge">
+              <span>🧸 Bear Hugs Sent: <strong>1</strong> 🤗</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Romantic Photo Lightbox Modal -->
+  <div class="lightbox-modal" id="photo-lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close photo preview">&times;</button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Aaru Photo Preview">
+    </div>
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+  <!-- ==========================================================================
+       4. ROSES AND FLOWERS SECTION 🌹
+       ========================================================================== -->
+  <section id="roses-section">
+    <div class="section-header">
+      <div class="section-tag">Infinite Blossoms 🌹</div>
+      <h2 class="section-title">Flowers For My Beautiful Girl 🌹</h2>
+      <p class="section-subtitle">Every petal sings the melody of your beauty, grace, and kindness.</p>
+    </div>
+
+    <div class="flowers-wrapper">
+      <div class="flower-garden-grid">
+        
+        <!-- Flower 1: Royal Red Rose -->
+        <div class="flower-card">
+          <svg class="flower-svg-art" viewBox="0 0 100 100">
+            <path d="M48 65 L48 95" stroke="#16a34a" stroke-width="4" stroke-linecap="round"/>
+            <path d="M48 76 Q30 72 34 84 Q48 80 48 76 Z" fill="#22c55e"/>
+            <path d="M48 80 Q66 76 62 88 Q48 84 48 80 Z" fill="#22c55e"/>
+            <circle cx="50" cy="42" r="26" fill="#9f1239"/>
+            <circle cx="50" cy="42" r="20" fill="#be123c"/>
+            <path d="M50 26 C40 30 38 42 45 48 C52 54 60 48 58 40 C56 34 52 30 50 26 Z" fill="#e11d48"/>
+            <path d="M46 38 C42 42 44 48 50 48 C54 48 56 44 54 40 C52 36 48 36 46 38 Z" fill="#fda4af"/>
+          </svg>
+          <h3 class="flower-name">Velvet Red Rose</h3>
+          <p class="flower-meaning">Symbol of my passionate and unconditional love for you.</p>
+        </div>
+
+        <!-- Flower 2: Sweet Pink Peony -->
+        <div class="flower-card">
+          <svg class="flower-svg-art" viewBox="0 0 100 100">
+            <path d="M50 68 L50 95" stroke="#16a34a" stroke-width="4" stroke-linecap="round"/>
+            <path d="M50 78 Q68 70 65 82 Q50 82 50 78 Z" fill="#22c55e"/>
+            <circle cx="50" cy="45" r="27" fill="#fb7185"/>
+            <!-- Peony Layers -->
+            <path d="M30 45 C30 35 40 30 50 30 C60 30 70 35 70 45 C70 58 60 64 50 64 C40 64 30 58 30 45 Z" fill="#fda4af"/>
+            <path d="M38 45 C38 38 44 35 50 35 C56 35 62 38 62 45 C62 52 56 56 50 56 C44 56 38 52 38 45 Z" fill="#fff1f2"/>
+            <circle cx="50" cy="46" r="5" fill="#fde047"/>
+          </svg>
+          <h3 class="flower-name">Pink Peony Bloom</h3>
+          <p class="flower-meaning">Embodying your gentle grace, bashful smile, and cuteness.</p>
+        </div>
+
+        <!-- Flower 3: Golden Heart Bouquet -->
+        <div class="flower-card">
+          <svg class="flower-svg-art" viewBox="0 0 100 100">
+            <!-- Wrapping paper cone -->
+            <polygon points="50,95 24,55 76,55" fill="#fef3c7" stroke="#fbbf24" stroke-width="2"/>
+            <line x1="24" y1="55" x2="76" y2="55" stroke="#f59e0b" stroke-width="3"/>
+            <!-- Flower heads cluster -->
+            <circle cx="42" cy="42" r="14" fill="#e11d48"/>
+            <circle cx="58" cy="42" r="14" fill="#fb7185"/>
+            <circle cx="50" cy="30" r="15" fill="#be123c"/>
+            <circle cx="50" cy="30" r="8" fill="#fda4af"/>
+            <!-- Bow on bouquet -->
+            <path d="M50 70 L42 66 L50 62 L58 66 Z" fill="#f43f5e"/>
+            <circle cx="50" cy="65" r="4" fill="#fbbf24"/>
+          </svg>
+          <h3 class="flower-name">Forever Bouquet</h3>
+          <p class="flower-meaning">Gathered with love, tied together with promises of forever.</p>
+        </div>
+
+      </div>
+
+      <!-- Flower Banner with Required Text & Action -->
+      <div class="flower-banner-quote">
+        <p class="flower-message-text">
+          "Just like these flowers, I hope your life always blooms with happiness, love, and beautiful moments. 💐"
+        </p>
+        <button id="shower-roses-btn" class="btn-romantic">
+          <span>Shower Aaru With Roses 🌹</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Romantic Photo Lightbox Modal -->
+  <div class="lightbox-modal" id="photo-lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close photo preview">&times;</button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Aaru Photo Preview">
+    </div>
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+  <!-- ==========================================================================
+       5. INTERACTIVE 3 GIFT BOXES 🎁
+       ========================================================================== -->
+  <section id="gifts-section">
+    <div class="section-header">
+      <div class="section-tag">Magical Surprises 🎁</div>
+      <h2 class="section-title">Three Special Gifts For You 🎁</h2>
+      <p class="section-subtitle">Tap each wrapped gift box to untie its ribbon and discover the romantic surprise inside!</p>
+    </div>
+
+    <div class="gifts-grid">
+      
+      <!-- Gift 1: Chocolate Surprise -->
+      <div class="gift-card-wrap">
+        <div class="gift-card" data-gift-id="1">
+          <div>
+            <span class="gift-number">Gift Box #1</span>
+            <h3 class="gift-title">Chocolate Surprise</h3>
+            <p class="gift-desc">A mouth-watering sweet temptation crafted to make you smile.</p>
+          </div>
+          <div class="gift-box-icon-wrap">
+            <svg class="gift-box-svg" viewBox="0 0 100 100">
+              <!-- Box base -->
+              <rect x="20" y="42" width="60" height="46" rx="8" fill="#e11d48"/>
+              <!-- Ribbon vertical -->
+              <rect x="44" y="42" width="12" height="46" fill="#fbbf24"/>
+              <!-- Box Lid -->
+              <rect x="15" y="32" width="70" height="15" rx="5" fill="#be123c"/>
+              <rect x="44" y="32" width="12" height="15" fill="#f59e0b"/>
+              <!-- Bow -->
+              <path d="M50 32 C35 15 25 32 46 32 Z" fill="#fbbf24"/>
+              <path d="M50 32 C65 15 75 32 54 32 Z" fill="#fbbf24"/>
+              <circle cx="50" cy="32" r="5" fill="#f59e0b"/>
+            </svg>
+          </div>
+          <div class="gift-tap-prompt">
+            <span>Tap to Unwrap 🍫✨</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gift 2: Teddy Bear Surprise -->
+      <div class="gift-card-wrap">
+        <div class="gift-card" data-gift-id="2">
+          <div>
+            <span class="gift-number">Gift Box #2</span>
+            <h3 class="gift-title">Teddy Bear Surprise</h3>
+            <p class="gift-desc">Warm, soft, and ready to cuddle my cutie pie anytime.</p>
+          </div>
+          <div class="gift-box-icon-wrap">
+            <svg class="gift-box-svg" viewBox="0 0 100 100">
+              <!-- Box base -->
+              <rect x="20" y="42" width="60" height="46" rx="8" fill="#fda4af"/>
+              <!-- Ribbon vertical -->
+              <rect x="44" y="42" width="12" height="46" fill="#f43f5e"/>
+              <!-- Box Lid -->
+              <rect x="15" y="32" width="70" height="15" rx="5" fill="#fb7185"/>
+              <rect x="44" y="32" width="12" height="15" fill="#e11d48"/>
+              <!-- Bow -->
+              <path d="M50 32 C35 15 25 32 46 32 Z" fill="#f43f5e"/>
+              <path d="M50 32 C65 15 75 32 54 32 Z" fill="#f43f5e"/>
+              <circle cx="50" cy="32" r="5" fill="#be123c"/>
+            </svg>
+          </div>
+          <div class="gift-tap-prompt">
+            <span>Tap to Unwrap 🧸✨</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gift 3: A Message From My Heart -->
+      <div class="gift-card-wrap">
+        <div class="gift-card" data-gift-id="3">
+          <div>
+            <span class="gift-number">Gift Box #3</span>
+            <h3 class="gift-title">A Message From My Heart</h3>
+            <p class="gift-desc">The most genuine and emotional words meant solely for your eyes.</p>
+          </div>
+          <div class="gift-box-icon-wrap">
+            <svg class="gift-box-svg" viewBox="0 0 100 100">
+              <!-- Box base -->
+              <rect x="20" y="42" width="60" height="46" rx="8" fill="#881337"/>
+              <!-- Ribbon vertical -->
+              <rect x="44" y="42" width="12" height="46" fill="#fbbf24"/>
+              <!-- Box Lid -->
+              <rect x="15" y="32" width="70" height="15" rx="5" fill="#9f1239"/>
+              <rect x="44" y="32" width="12" height="15" fill="#f59e0b"/>
+              <!-- Bow -->
+              <path d="M50 32 C35 15 25 32 46 32 Z" fill="#fbbf24"/>
+              <path d="M50 32 C65 15 75 32 54 32 Z" fill="#fbbf24"/>
+              <circle cx="50" cy="32" r="5" fill="#d97706"/>
+            </svg>
+          </div>
+          <div class="gift-tap-prompt">
+            <span>Tap to Unwrap 💌✨</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Romantic Photo Lightbox Modal -->
+  <div class="lightbox-modal" id="photo-lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close photo preview">&times;</button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Aaru Photo Preview">
+    </div>
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+  <!-- Gift Reveal Modal -->
+  <div class="gift-modal-overlay" id="gift-modal" role="dialog" aria-modal="true">
+    <div class="gift-modal-content">
+      <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">&times;</button>
+      <h3 id="modal-gift-title" style="font-family: var(--font-serif); font-size: 1.8rem; color: #fff; margin-bottom: 20px;"></h3>
+      <div id="modal-gift-body"></div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       6. ROMANTIC PHOTO MEMORIES GALLERY
+       ========================================================================== -->
+  <section id="gallery-section">
+    <div class="section-header">
+      <div class="section-tag">Precious Memories 📸</div>
+      <h2 class="section-title">My Beautiful Birthday Girl 💖</h2>
+      <p class="section-subtitle">Every single glance at your photos reminds me how blessed I am to have you in my life.</p>
+    </div>
+
+    <div class="gallery-grid">
+      <!-- Polaroid 1 -->
+      <div class="polaroid-card" style="--rot: -2.5deg;">
+        <div class="polaroid-tape"></div>
+        <div class="polaroid-img-wrap">
+          <img src="images/aaru-1.jpeg" alt="Aaru - My Gorgeous Sunshine" loading="lazy">
+        </div>
+        <div class="polaroid-caption">My Sweet Queen 👑</div>
+      </div>
+
+      <!-- Polaroid 2 -->
+      <div class="polaroid-card" style="--rot: 2.2deg;">
+        <div class="polaroid-tape"></div>
+        <div class="polaroid-img-wrap">
+          <img src="images/aaru-2.jpeg" alt="Aaru - Cutest Smile" loading="lazy">
+        </div>
+        <div class="polaroid-caption">Cutest Smile Ever 🥰</div>
+      </div>
+
+      <!-- Polaroid 3 -->
+      <div class="polaroid-card" style="--rot: -1.8deg;">
+        <div class="polaroid-tape"></div>
+        <div class="polaroid-img-wrap">
+          <img src="images/aaru-3.jpeg" alt="Aaru - My Heartbeat" loading="lazy">
+        </div>
+        <div class="polaroid-caption">My Heartbeat 💗</div>
+      </div>
+
+      <!-- Polaroid 4 -->
+      <div class="polaroid-card" style="--rot: 2deg;">
+        <div class="polaroid-tape"></div>
+        <div class="polaroid-img-wrap">
+          <img src="images/aaru-4.jpeg" alt="Aaru - Radiance and Beauty" loading="lazy">
+        </div>
+        <div class="polaroid-caption">Pure Radiance ✨</div>
+      </div>
+
+      <!-- Polaroid 5 -->
+      <div class="polaroid-card" style="--rot: -2deg;">
+        <div class="polaroid-tape"></div>
+        <div class="polaroid-img-wrap">
+          <img src="images/aaru-5.jpeg" alt="Aaru - My Cutie Pie" loading="lazy">
+        </div>
+        <div class="polaroid-caption">My Cutie Pie 🎀</div>
+      </div>
+
+      <!-- Polaroid 6 -->
+      <div class="polaroid-card" style="--rot: 1.5deg;">
+        <div class="polaroid-tape"></div>
+        <div class="polaroid-img-wrap">
+          <img src="images/aaru-6.jpeg" alt="Aaru - Forever Mine" loading="lazy">
+        </div>
+        <div class="polaroid-caption">Forever Mine 💍</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Romantic Photo Lightbox Modal -->
+  <div class="lightbox-modal" id="photo-lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close photo preview">&times;</button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Aaru Photo Preview">
+    </div>
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+  <!-- ==========================================================================
+       7. MOST IMPORTANT — FINAL PERSONAL MESSAGE ❤️
+       ========================================================================== -->
+    <!-- Romantic Photo Lightbox Modal -->
+  <div class="lightbox-modal" id="photo-lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close photo preview">&times;</button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Aaru Photo Preview">
+    </div>
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+  <section class="personal-message-section" id="personal-message">
+    <div class="section-header">
+      <div class="section-tag" style="background: rgba(225, 29, 72, 0.25); border-color: #f43f5e; color: #ffe4e6;">
+        From The Bottom Of My Heart 💌
+      </div>
+      <h2 class="section-title">Just For You, My Aaru ❤️</h2>
+      <p class="section-subtitle">Every word below comes straight from my soul.</p>
+    </div>
+
+    <div class="personal-message-wrapper">
+      <div class="letter-envelope-card">
+        
+        <!-- Companion Teddy Bear holding Heart SVG -->
+        <svg class="letter-teddy-companion" viewBox="0 0 100 100" fill="none">
+          <circle cx="28" cy="28" r="14" fill="#a0522d"/>
+          <circle cx="28" cy="28" r="8" fill="#fda4af"/>
+          <circle cx="72" cy="28" r="14" fill="#a0522d"/>
+          <circle cx="72" cy="28" r="8" fill="#fda4af"/>
+          <circle cx="50" cy="45" r="28" fill="#b45309"/>
+          <ellipse cx="50" cy="52" rx="12" ry="9" fill="#fef3c7"/>
+          <ellipse cx="50" cy="48" rx="5" ry="3.5" fill="#451a03"/>
+          <circle cx="39" cy="42" r="3.5" fill="#1f2937"/>
+          <circle cx="61" cy="42" r="3.5" fill="#1f2937"/>
+          <ellipse cx="32" cy="52" rx="5" ry="3" fill="#f43f5e" opacity="0.6"/>
+          <ellipse cx="68" cy="52" rx="5" ry="3" fill="#f43f5e" opacity="0.6"/>
+          <ellipse cx="50" cy="78" rx="22" ry="18" fill="#b45309"/>
+          <path d="M50 72 C42 60 30 68 35 78 C40 86 50 92 50 92 C50 92 60 86 65 78 C70 68 58 60 50 72 Z" fill="#e11d48"/>
+          <circle cx="37" cy="74" r="6" fill="#a0522d"/>
+          <circle cx="63" cy="74" r="6" fill="#a0522d"/>
+        </svg>
+
+        <!-- Header inside the letter -->
+        <div class="letter-header">
+          <!-- Aaru Photo in Circular Floral Border -->
+          <div class="letter-photo-small">
+            <img src="images/aaru-2.jpeg" alt="Aaru">
+          </div>
+          <h3 class="letter-heading-title">Just For You, My Aaru ❤️</h3>
+          <div class="letter-heading-sub">My Life, My Heart, My Forever Wife</div>
+        </div>
+
+        <!-- EXACT PERSONAL MESSAGE - PRESERVED WORD FOR WORD AS PROVIDED -->
+        <div class="exact-personal-message">
+Hii aaru 🌸❤️
+
+i loveeeeeeeeee youuuuuuuuuuuu so so much my wifeeeeeeeeeeeee ❤️🥹💍
+
+tame jivan ma bov j aagal vadho tmara mummy papa nu naam roshan karo 🌟🙏 tame mane proud feel karavo eni bhagwan ne prathna 🥹❤️
+
+you are besttttttttt remember tamne bija key ena ma kaay ekal nathi tame maari and tamara man ma sacha cho e best ok 🫶🏻💗
+
+hu tamne bov heran karu and rovdavi dv jaani joy ne to pn mari sathe ryo e sari vat chhe 🥺❤️
+
+you are very special for meeeeeeeeee 💝
+
+mine aaru okkkkkkkkkkk 💍❤️
+
+my cutie pie aaru 🥰🎀
+
+my chotu babyyyyyyyyyyy 🧸💗
+
+mara thi koy divsh dur na jata okkkkkkkkkkk 🥺❤️🫂
+        </div>
+
+        <!-- Signature Area -->
+        <div class="letter-signature-area">
+          <div class="letter-signature">
+            Forever Yours ❤️
+          </div>
+          <div class="letter-wax-seal" title="Sealed With Eternal Love">
+            💍
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Romantic Photo Lightbox Modal -->
+  <div class="lightbox-modal" id="photo-lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close photo preview">&times;</button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Aaru Photo Preview">
+    </div>
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+  <!-- ==========================================================================
+       8. FINAL SCREEN ANIMATION SECTION 🎆
+       ========================================================================== -->
+  <section class="grand-finale-section" id="grand-finale">
+    <div class="finale-content">
+      
+      <!-- Cute Teddy Bear Hugging a Heart -->
+      <div class="finale-teddy-wrap">
+        <svg viewBox="0 0 100 100" fill="none">
+          <!-- Ears -->
+          <circle cx="28" cy="28" r="14" fill="#a0522d"/>
+          <circle cx="28" cy="28" r="8" fill="#fda4af"/>
+          <circle cx="72" cy="28" r="14" fill="#a0522d"/>
+          <circle cx="72" cy="28" r="8" fill="#fda4af"/>
+          <!-- Head -->
+          <circle cx="50" cy="45" r="28" fill="#b45309"/>
+          <!-- Snout -->
+          <ellipse cx="50" cy="52" rx="12" ry="9" fill="#fef3c7"/>
+          <ellipse cx="50" cy="48" rx="5" ry="3.5" fill="#451a03"/>
+          <path d="M47 52 Q50 56 53 52" stroke="#451a03" stroke-width="2" stroke-linecap="round"/>
+          <ellipse cx="32" cy="52" rx="5" ry="3" fill="#f43f5e" opacity="0.6"/>
+          <ellipse cx="68" cy="52" rx="5" ry="3" fill="#f43f5e" opacity="0.6"/>
+          <!-- Eyes -->
+          <circle cx="39" cy="42" r="3.5" fill="#1f2937"/>
+          <circle cx="38" cy="41" r="1" fill="#fff"/>
+          <circle cx="61" cy="42" r="3.5" fill="#1f2937"/>
+          <circle cx="60" cy="41" r="1" fill="#fff"/>
+          <!-- Big Beating Heart -->
+          <path d="M50 62 C38 46 18 60 26 78 C34 94 50 102 50 102 C50 102 66 94 74 78 C82 60 62 46 50 62 Z" fill="#e11d48"/>
+          <!-- Paws wrapping tight around heart -->
+          <circle cx="32" cy="72" r="8" fill="#a0522d"/>
+          <circle cx="68" cy="72" r="8" fill="#a0522d"/>
+        </svg>
+      </div>
+
+      <!-- Glowing Birthday Wishes Text -->
+      <h2 class="finale-title">
+        Happy Birthday Once Again, Aaru! ❤️
+      </h2>
+
+      <!-- Read Message Again Button -->
+      <div class="finale-actions">
+        <button id="read-again-btn" class="btn-romantic">
+          <span>Read My Message Again 💌</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Romantic Photo Lightbox Modal -->
+  <div class="lightbox-modal" id="photo-lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close photo preview">&times;</button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Aaru Photo Preview">
+    </div>
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>Crafted with endless love & devotion for Aaru on her Birthday 💕 Forever & Always.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+</body>
+</html>
+

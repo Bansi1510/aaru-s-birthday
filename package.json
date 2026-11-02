@@ -1,0 +1,17 @@
+{
+  "name": "aaru-birthday-surprise",
+  "version": "1.0.0",
+  "description": "Romantic Birthday Surprise for Aaru",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "build": "echo 'Static site ready for deployment'"
+  },
+  "keywords": [
+    "birthday",
+    "romantic",
+    "aaru"
+  ],
+  "author": "",
+  "license": "MIT"
+}
