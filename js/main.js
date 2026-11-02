@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initFlowerShower();
   initGiftBoxes();
   initPhotoLightbox();
+  initCandleBlow();
+  initLoveMeter();
+  initScrollTop();
   initFairyTrail();
   initFinaleActions();
 });
@@ -442,43 +445,201 @@ function initGiftBoxes() {
 }
 
 /* ==========================================================================
-   7. PHOTO LIGHTBOX MODAL
+   7. PHOTO LIGHTBOX MODAL WITH FULL-SCREEN MOBILE NAVIGATION
    ========================================================================== */
 function initPhotoLightbox() {
-  const polaroids = document.querySelectorAll('.polaroid-card');
   const lightbox = document.getElementById('photo-lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
   const lightboxCaption = document.getElementById('lightbox-caption');
   const lightboxClose = document.getElementById('lightbox-close');
+  const lightboxPrev = document.getElementById('lightbox-prev');
+  const lightboxNext = document.getElementById('lightbox-next');
+  const polaroids = document.querySelectorAll('.polaroid-card');
+  const heroPhotoBtn = document.getElementById('hero-photo-btn');
+  const letterPhotoSmall = document.querySelector('.letter-photo-small');
 
-  if (!lightbox || !lightboxImg) return;
+  const photoList = [
+    { src: 'images/aaru-1.jpeg', caption: 'My Sweet Queen 👑' },
+    { src: 'images/aaru-2.jpeg', caption: 'Cutest Smile Ever 🥰' },
+    { src: 'images/aaru-3.jpeg', caption: 'My Heartbeat 💗' },
+    { src: 'images/aaru-4.jpeg', caption: 'Pure Radiance ✨' },
+    { src: 'images/aaru-5.jpeg', caption: 'My Cutie Pie 🎀' },
+    { src: 'images/aaru-6.jpeg', caption: 'Forever Mine 💍' }
+  ];
 
-  polaroids.forEach((card) => {
-    card.addEventListener('click', () => {
-      const img = card.querySelector('img');
-      const cap = card.querySelector('.polaroid-caption');
-      if (img) {
-        lightboxImg.src = img.src;
-        lightboxImg.alt = img.alt || 'Aaru';
-      }
-      if (cap && lightboxCaption) {
-        lightboxCaption.textContent = cap.textContent;
-      }
-      playSparkleSound();
-      lightbox.classList.add('active');
-    });
+  let currentIndex = 0;
+
+  function showPhoto(index) {
+    if (index < 0) index = photoList.length - 1;
+    if (index >= photoList.length) index = 0;
+    currentIndex = index;
+
+    if (lightboxImg) {
+      lightboxImg.style.opacity = '0';
+      lightboxImg.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        lightboxImg.src = photoList[currentIndex].src;
+        lightboxImg.alt = photoList[currentIndex].caption;
+        if (lightboxCaption) {
+          lightboxCaption.textContent = photoList[currentIndex].caption;
+        }
+        lightboxImg.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        lightboxImg.style.opacity = '1';
+        lightboxImg.style.transform = 'scale(1)';
+      }, 150);
+    }
+  }
+
+  function openLightbox(index = 0) {
+    showPhoto(index);
+    playSparkleSound();
+    if (lightbox) lightbox.classList.add('active');
+  }
+
+  function closeLightbox() {
+    if (lightbox) lightbox.classList.remove('active');
+  }
+
+  // Open from hero
+  if (heroPhotoBtn) {
+    heroPhotoBtn.addEventListener('click', () => openLightbox(0));
+  }
+
+  // Open from letter
+  if (letterPhotoSmall) {
+    letterPhotoSmall.addEventListener('click', () => openLightbox(1));
+  }
+
+  // Open from polaroids
+  polaroids.forEach((card, idx) => {
+    card.addEventListener('click', () => openLightbox(idx));
   });
 
-  if (lightboxClose) {
-    lightboxClose.addEventListener('click', () => {
-      lightbox.classList.remove('active');
+  if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+  if (lightboxPrev) lightboxPrev.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showPhoto(currentIndex - 1);
+  });
+  if (lightboxNext) lightboxNext.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showPhoto(currentIndex + 1);
+  });
+
+  if (lightbox) {
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
     });
   }
 
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) {
-      lightbox.classList.remove('active');
+  // Keyboard navigation
+  window.addEventListener('keydown', (e) => {
+    if (!lightbox || !lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') showPhoto(currentIndex - 1);
+    if (e.key === 'ArrowRight') showPhoto(currentIndex + 1);
+  });
+
+  // Mobile swipe gestures
+  let touchStartX = 0;
+  if (lightbox) {
+    lightbox.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    lightbox.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].screenX;
+      if (touchEndX < touchStartX - 50) {
+        showPhoto(currentIndex + 1); // Swipe left -> Next
+      }
+      if (touchEndX > touchStartX + 50) {
+        showPhoto(currentIndex - 1); // Swipe right -> Prev
+      }
+    }, { passive: true });
+  }
+}
+
+/* ==========================================================================
+   8. CANDLE BLOW-OUT & WISH MAKER 🕯️✨
+   ========================================================================== */
+function initCandleBlow() {
+  const blowBtn = document.getElementById('blow-candle-btn');
+  const flame = document.getElementById('cake-candle-flame');
+  const btnText = document.getElementById('candle-btn-text');
+  let isBlown = false;
+
+  if (!blowBtn) return;
+
+  blowBtn.addEventListener('click', () => {
+    if (!isBlown) {
+      isBlown = true;
+      if (flame) {
+        flame.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        flame.style.opacity = '0';
+        flame.style.transform = 'translateY(-10px) scale(0.2)';
+      }
+      playSparkleSound();
+      if (window.burstPetals) window.burstPetals(45);
+      createFloatingEmojis(blowBtn, ['✨', '🎂', '🎉', '💖', '⭐', '🕯️'], 24);
+
+      if (btnText) {
+        btnText.innerHTML = '✨ Wish Made & Flame Blown! Happy Birthday Aaru! 🎉🎂';
+      }
+      showToast('May all your secret wishes and prayers come true, my cutie pie! 🎂✨');
+    } else {
+      // Re-light candle
+      isBlown = false;
+      if (flame) {
+        flame.style.opacity = '1';
+        flame.style.transform = 'translateY(0) scale(1)';
+      }
+      if (btnText) {
+        btnText.innerHTML = 'Make A Birthday Wish & Blow The Candle! 🕯️✨';
+      }
+      showToast('Candle re-lit with endless love! Make another wish! 🕯️💖');
     }
+  });
+}
+
+/* ==========================================================================
+   9. LOVE METER BOOSTER WIDGET 💖
+   ========================================================================== */
+function initLoveMeter() {
+  const boostBtn = document.getElementById('boost-love-btn');
+  const percentText = document.getElementById('meter-percent');
+  let boosterLevel = 1000;
+
+  if (!boostBtn) return;
+
+  boostBtn.addEventListener('click', () => {
+    boosterLevel += 500;
+    playSparkleSound();
+    createFloatingEmojis(boostBtn, ['🚀', '💕', '💖', '🥰', '💍', '✨'], 20);
+
+    if (percentText) {
+      percentText.textContent = `${boosterLevel}% ULTRA INFINITE ❤️`;
+    }
+    showToast(`Love boosted to ${boosterLevel}%! Infinite hugs & kisses sent to Aaru! 🚀💕`);
+  });
+}
+
+/* ==========================================================================
+   10. SCROLL TO TOP HEART BUTTON
+   ========================================================================== */
+function initScrollTop() {
+  const scrollBtn = document.getElementById('scroll-top-btn');
+  if (!scrollBtn) return;
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 350) {
+      scrollBtn.classList.add('visible');
+    } else {
+      scrollBtn.classList.remove('visible');
+    }
+  }, { passive: true });
+
+  scrollBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    playSparkleSound();
   });
 }
 

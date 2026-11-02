@@ -299,28 +299,24 @@ section {
   margin-bottom: 35px;
 }
 
-/* Photo Frame */
+/* Photo Frame - Enhanced Portrait Arch */
 .hero-photo-frame {
   position: relative;
   width: 250px;
-  height: 250px;
-  border-radius: 50%;
+  height: 330px;
+  border-radius: 120px 120px 36px 36px;
   padding: 8px;
   background: linear-gradient(135deg, #f43f5e, #fbbf24, #be123c, #fda4af);
-  box-shadow: 0 0 40px rgba(244, 63, 94, 0.5), 0 0 80px rgba(225, 29, 72, 0.25);
+  box-shadow: 0 10px 40px rgba(244, 63, 94, 0.5), 0 0 70px rgba(225, 29, 72, 0.3);
   animation: borderRotate 12s linear infinite;
   z-index: 2;
-}
-
-@keyframes borderRotate {
-  0% { filter: hue-rotate(0deg); }
-  100% { filter: hue-rotate(360deg); }
+  cursor: pointer;
 }
 
 .hero-photo-inner {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
+  border-radius: 112px 112px 28px 28px;
   overflow: hidden;
   position: relative;
   border: 4px solid #fff;
@@ -331,8 +327,26 @@ section {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 20%;
+  object-position: center 15%;
   transition: transform 0.6s ease;
+  display: block;
+}
+
+.hero-photo-badge {
+  position: absolute;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #e11d48, #be123c);
+  color: #fff;
+  padding: 5px 16px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(225, 29, 72, 0.6);
+  border: 2px solid #fff;
+  z-index: 10;
 }
 
 .hero-photo-inner:hover img {
@@ -995,17 +1009,35 @@ section {
 
 .polaroid-img-wrap {
   width: 100%;
-  aspect-ratio: 1 / 1.1;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
-  border-radius: 4px;
-  background: #111;
+  border-radius: 6px;
+  background: #2a0814;
+  position: relative;
 }
 
 .polaroid-img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 15%;
   transition: transform 0.6s ease;
+  display: block;
+}
+
+.polaroid-tap-hint {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(44, 6, 19, 0.75);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  font-size: 0.65rem;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(254, 205, 211, 0.4);
+  pointer-events: none;
+  opacity: 0.85;
 }
 
 .polaroid-card:hover .polaroid-img-wrap img {
@@ -1074,9 +1106,9 @@ section {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(18, 2, 8, 0.92);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(14, 2, 6, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   z-index: 10001;
   display: flex;
   flex-direction: column;
@@ -1095,12 +1127,16 @@ section {
 
 .lightbox-content {
   position: relative;
-  max-width: 90vw;
+  max-width: 92vw;
   max-height: 80vh;
-  border-radius: 18px;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(225, 29, 72, 0.45);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 50px rgba(225, 29, 72, 0.5);
   border: 3px solid #fda4af;
+  background: #0f0106;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transform: scale(0.9);
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -1110,10 +1146,12 @@ section {
 }
 
 .lightbox-content img {
-  width: 100%;
-  max-height: 75vh;
+  width: auto;
+  max-width: 100%;
+  max-height: 74vh;
   object-fit: contain;
   display: block;
+  margin: 0 auto;
 }
 
 .lightbox-caption {
@@ -1141,11 +1179,161 @@ section {
   justify-content: center;
   cursor: pointer;
   transition: background 0.3s ease;
-  z-index: 10;
+  z-index: 15;
 }
 
 .lightbox-close:hover {
   background: rgba(225, 29, 72, 0.6);
+}
+
+.lightbox-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(44, 6, 19, 0.75);
+  border: 1px solid rgba(254, 205, 211, 0.4);
+  color: #fff;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+  z-index: 12;
+  backdrop-filter: blur(8px);
+}
+
+.lightbox-nav-btn:hover {
+  background: rgba(225, 29, 72, 0.8);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.lightbox-nav-btn.prev {
+  left: 20px;
+}
+
+.lightbox-nav-btn.next {
+  right: 20px;
+}
+
+/* Floating Scroll To Top Heart */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f43f5e, #be123c);
+  color: #fff;
+  border: 2px solid #fda4af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(225, 29, 72, 0.5);
+  z-index: 998;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--transition-smooth);
+}
+
+.scroll-top-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.scroll-top-btn:hover {
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 10px 25px rgba(225, 29, 72, 0.7);
+}
+
+/* Romantic Love Reasons Grid */
+.reasons-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 1100px;
+  margin: 30px auto 0 auto;
+}
+
+.reason-card {
+  background: rgba(44, 6, 19, 0.75);
+  border: 1px solid rgba(244, 63, 94, 0.35);
+  border-radius: 20px;
+  padding: 24px 18px;
+  text-align: center;
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.reason-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent-pink);
+  box-shadow: 0 12px 30px rgba(225, 29, 72, 0.4);
+}
+
+.reason-icon {
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+  display: inline-block;
+  animation: floatHeart 3s ease-in-out infinite alternate;
+}
+
+.reason-title {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.reason-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Love Meter Widget */
+.love-meter-box {
+  background: linear-gradient(135deg, rgba(88, 10, 36, 0.85), rgba(44, 6, 19, 0.95));
+  border: 1px solid rgba(244, 63, 94, 0.4);
+  border-radius: 24px;
+  padding: 30px 24px;
+  text-align: center;
+  max-width: 650px;
+  margin: 40px auto 0 auto;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.meter-bar-track {
+  width: 100%;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 18px 0;
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  position: relative;
+}
+
+.meter-bar-fill {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #f43f5e, #fbbf24, #f472b6, #e11d48);
+  border-radius: 999px;
+  animation: meterGlow 3s ease infinite alternate;
+}
+
+@keyframes meterGlow {
+  0% { filter: brightness(1); }
+  100% { filter: brightness(1.25); }
 }
 
 /* Touch & Cursor Fairy Trail */
@@ -1172,23 +1360,31 @@ section {
 }
 
 .letter-photo-small {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
+  width: 140px;
+  height: 185px;
+  border-radius: 24px;
   margin: 0 auto 15px auto;
   border: 3px solid #e11d48;
-  padding: 3px;
+  padding: 4px;
   background: #fff;
-  box-shadow: 0 8px 20px rgba(225, 29, 72, 0.35);
+  box-shadow: 0 10px 25px rgba(225, 29, 72, 0.4);
   overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.letter-photo-small:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 35px rgba(225, 29, 72, 0.6);
 }
 
 .letter-photo-small img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
-  border-radius: 50%;
+  object-position: center 15%;
+  border-radius: 18px;
+  display: block;
 }
 
 .letter-heading-title {
@@ -1690,9 +1886,21 @@ footer {
   }
 
   .letter-photo-small {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 12px;
+    width: 120px;
+    height: 160px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+
+  .letter-photo-small img {
+    border-radius: 16px;
+  }
+
+  .reasons-grid {
+    grid-template-columns: 1fr;
+    max-width: 320px;
+    margin: 20px auto 0 auto;
+    gap: 16px;
   }
 
   .letter-teddy-companion {

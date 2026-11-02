@@ -40,10 +40,11 @@
     
     <div class="hero-visual-wrapper">
       <!-- Main Aaru Photograph in Glowing Frame -->
-      <div class="hero-photo-frame">
+      <div class="hero-photo-frame" id="hero-photo-btn" title="Tap to view full photo!">
         <div class="hero-photo-inner">
           <img src="images/aaru-1.jpeg" alt="Aaru - My Beautiful Birthday Girl" loading="eager">
         </div>
+        <div class="hero-photo-badge">My Cutie Pie Aaru 👑</div>
       </div>
 
       <!-- Floating Cute Teddy Bear SVG -->
@@ -93,7 +94,7 @@
           <!-- Candle -->
           <rect x="48" y="32" width="4" height="15" rx="2" fill="#fbbf24"/>
           <!-- Animated Flame -->
-          <path d="M50 22 C48 26 47 28 50 32 C53 28 52 26 50 22 Z" fill="#f59e0b">
+          <path id="cake-candle-flame" d="M50 22 C48 26 47 28 50 32 C53 28 52 26 50 22 Z" fill="#f59e0b">
             <animate attributeName="d" values="M50 22 C48 26 47 28 50 32 C53 28 52 26 50 22 Z; M50 20 C47 25 46 27 50 32 C54 27 53 25 50 20 Z; M50 22 C48 26 47 28 50 32 C53 28 52 26 50 22 Z" dur="1s" repeatCount="indefinite"/>
           </path>
           <circle cx="50" cy="27" r="3" fill="#fef08a"/>
@@ -144,6 +145,11 @@
       <a href="#personal-message" class="btn-romantic btn-secondary">
         <span>Read Love Letter 💌</span>
       </a>
+    </div>
+    <div style="margin-top: 16px;">
+      <button id="blow-candle-btn" class="btn-romantic btn-secondary" style="padding: 12px 26px; font-size: 0.92rem;">
+        <span id="candle-btn-text">Make A Birthday Wish & Blow The Candle! 🕯️✨</span>
+      </button>
     </div>
   </header>
 
@@ -264,15 +270,6 @@
     </div>
   </section>
 
-  <!-- Romantic Photo Lightbox Modal -->
-  <div class="lightbox-modal" id="photo-lightbox" role="dialog" aria-modal="true">
-    <button class="lightbox-close" id="lightbox-close" aria-label="Close photo preview">&times;</button>
-    <div class="lightbox-content">
-      <img id="lightbox-img" src="" alt="Aaru Photo Preview">
-    </div>
-    <div class="lightbox-caption" id="lightbox-caption"></div>
-  </div>
-
   <!-- ==========================================================================
        3. TEDDY BEAR SURPRISE 🧸
        ========================================================================== -->
@@ -369,15 +366,6 @@
     </div>
   </section>
 
-  <!-- Romantic Photo Lightbox Modal -->
-  <div class="lightbox-modal" id="photo-lightbox" role="dialog" aria-modal="true">
-    <button class="lightbox-close" id="lightbox-close" aria-label="Close photo preview">&times;</button>
-    <div class="lightbox-content">
-      <img id="lightbox-img" src="" alt="Aaru Photo Preview">
-    </div>
-    <div class="lightbox-caption" id="lightbox-caption"></div>
-  </div>
-
   <!-- ==========================================================================
        4. ROSES AND FLOWERS SECTION 🌹
        ========================================================================== -->
@@ -454,15 +442,6 @@
 
     </div>
   </section>
-
-  <!-- Romantic Photo Lightbox Modal -->
-  <div class="lightbox-modal" id="photo-lightbox" role="dialog" aria-modal="true">
-    <button class="lightbox-close" id="lightbox-close" aria-label="Close photo preview">&times;</button>
-    <div class="lightbox-content">
-      <img id="lightbox-img" src="" alt="Aaru Photo Preview">
-    </div>
-    <div class="lightbox-caption" id="lightbox-caption"></div>
-  </div>
 
   <!-- ==========================================================================
        5. INTERACTIVE 3 GIFT BOXES 🎁
@@ -566,15 +545,6 @@
     </div>
   </section>
 
-  <!-- Romantic Photo Lightbox Modal -->
-  <div class="lightbox-modal" id="photo-lightbox" role="dialog" aria-modal="true">
-    <button class="lightbox-close" id="lightbox-close" aria-label="Close photo preview">&times;</button>
-    <div class="lightbox-content">
-      <img id="lightbox-img" src="" alt="Aaru Photo Preview">
-    </div>
-    <div class="lightbox-caption" id="lightbox-caption"></div>
-  </div>
-
   <!-- Gift Reveal Modal -->
   <div class="gift-modal-overlay" id="gift-modal" role="dialog" aria-modal="true">
     <div class="gift-modal-content">
@@ -587,6 +557,61 @@
   <!-- ==========================================================================
        6. ROMANTIC PHOTO MEMORIES GALLERY
        ========================================================================== -->
+  
+
+  <!-- ==========================================================================
+       6. REASONS WHY I LOVE YOU AARU & LOVE METER 💖
+       ========================================================================== -->
+  <section id="reasons-section">
+    <div class="section-header">
+      <div class="section-tag">Infinite Love 💖</div>
+      <h2 class="section-title">Why You Are My Everything 👑</h2>
+      <p class="section-subtitle">A few of the million reasons my heart beats only for you, my cutie pie.</p>
+    </div>
+
+    <div class="reasons-grid">
+      <div class="reason-card">
+        <div class="reason-icon">👑</div>
+        <h3 class="reason-title">Pure & Caring Soul</h3>
+        <p class="reason-text">Your innocence, deep respect for parents, and selfless heart make me proud of you every single day.</p>
+      </div>
+
+      <div class="reason-card">
+        <div class="reason-icon">🌸</div>
+        <h3 class="reason-title">Precious Radiant Smile</h3>
+        <p class="reason-text">One glimpse of your sweet smile turns all my stress into peace. You are my true sunshine.</p>
+      </div>
+
+      <div class="reason-card">
+        <div class="reason-icon">🎀</div>
+        <h3 class="reason-title">My Cutie Pie Teaser</h3>
+        <p class="reason-text">Even when we tease each other, fight playfully, or laugh together, having you by my side is life's sweetest blessing.</p>
+      </div>
+
+      <div class="reason-card">
+        <div class="reason-icon">💍</div>
+        <h3 class="reason-title">My Forever Wife</h3>
+        <p class="reason-text">In you I found my best friend, my soulmate, and my forever home. I am truly blessed to be yours.</p>
+      </div>
+    </div>
+
+    <!-- Love Meter Widget -->
+    <div class="love-meter-box">
+      <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: #fff; margin-bottom: 8px;">
+        Aaru's Love & Happiness Meter 💖
+      </h3>
+      <p style="font-size: 0.95rem; color: var(--text-secondary);">
+        Real-time celebration of infinite love: <strong id="meter-percent" style="color: #fbbf24;">1000% INFINITE</strong>
+      </p>
+      <div class="meter-bar-track">
+        <div class="meter-bar-fill" id="meter-fill"></div>
+      </div>
+      <button id="boost-love-btn" class="btn-romantic" style="padding: 12px 28px; font-size: 0.95rem; margin-top: 10px;">
+        <span>Send Love Booster 🚀💕</span>
+      </button>
+    </div>
+  </section>
+
   <section id="gallery-section">
     <div class="section-header">
       <div class="section-tag">Precious Memories 📸</div>
@@ -651,26 +676,9 @@
     </div>
   </section>
 
-  <!-- Romantic Photo Lightbox Modal -->
-  <div class="lightbox-modal" id="photo-lightbox" role="dialog" aria-modal="true">
-    <button class="lightbox-close" id="lightbox-close" aria-label="Close photo preview">&times;</button>
-    <div class="lightbox-content">
-      <img id="lightbox-img" src="" alt="Aaru Photo Preview">
-    </div>
-    <div class="lightbox-caption" id="lightbox-caption"></div>
-  </div>
-
   <!-- ==========================================================================
        7. MOST IMPORTANT — FINAL PERSONAL MESSAGE ❤️
        ========================================================================== -->
-    <!-- Romantic Photo Lightbox Modal -->
-  <div class="lightbox-modal" id="photo-lightbox" role="dialog" aria-modal="true">
-    <button class="lightbox-close" id="lightbox-close" aria-label="Close photo preview">&times;</button>
-    <div class="lightbox-content">
-      <img id="lightbox-img" src="" alt="Aaru Photo Preview">
-    </div>
-    <div class="lightbox-caption" id="lightbox-caption"></div>
-  </div>
 
   <section class="personal-message-section" id="personal-message">
     <div class="section-header">
@@ -750,15 +758,6 @@ mara thi koy divsh dur na jata okkkkkkkkkkk 🥺❤️🫂
     </div>
   </section>
 
-  <!-- Romantic Photo Lightbox Modal -->
-  <div class="lightbox-modal" id="photo-lightbox" role="dialog" aria-modal="true">
-    <button class="lightbox-close" id="lightbox-close" aria-label="Close photo preview">&times;</button>
-    <div class="lightbox-content">
-      <img id="lightbox-img" src="" alt="Aaru Photo Preview">
-    </div>
-    <div class="lightbox-caption" id="lightbox-caption"></div>
-  </div>
-
   <!-- ==========================================================================
        8. FINAL SCREEN ANIMATION SECTION 🎆
        ========================================================================== -->
@@ -812,11 +811,16 @@ mara thi koy divsh dur na jata okkkkkkkkkkk 🥺❤️🫂
   <!-- Romantic Photo Lightbox Modal -->
   <div class="lightbox-modal" id="photo-lightbox" role="dialog" aria-modal="true">
     <button class="lightbox-close" id="lightbox-close" aria-label="Close photo preview">&times;</button>
+    <button class="lightbox-nav-btn prev" id="lightbox-prev" aria-label="Previous Photo">&#10094;</button>
+    <button class="lightbox-nav-btn next" id="lightbox-next" aria-label="Next Photo">&#10095;</button>
     <div class="lightbox-content">
       <img id="lightbox-img" src="" alt="Aaru Photo Preview">
     </div>
     <div class="lightbox-caption" id="lightbox-caption"></div>
   </div>
+
+  <!-- Floating Scroll To Top Heart Button -->
+  <button class="scroll-top-btn" id="scroll-top-btn" aria-label="Scroll to top">💖</button>
 
   <!-- Footer -->
   <footer>
